@@ -1,0 +1,177 @@
+start = 
+(space* "<?php" space*)? code:code* (space* "?>" space*)?
+{
+  return new Code(code);
+}
+
+arguments = space* "(" arguments:(expression / ',' / space+)* ")" space*
+{
+  //arguments = arguments.filter(only_elements);
+  return new Arguments(arguments);
+}
+
+attribute = 
+("public" / "private" / "protected" / "static" / space+)
+
+code = 
+  block
+/ space+
+/ function_definition
+/ statement
+/ class_definition
+/ expression
+/ ';'
+
+expression =   
+  operator
+/ expression2
+
+expression2 = 
+  value
+/ string
+/ variable "->" invoke_function
+/ variable
+/ invoke_function
+/ "!"
+
+expressions =
+  expression
+/ space+
+
+space = [ \n]
+espace = [ \n] { return ''; }
+
+block = space* "{" space* code:code* space* "}" space*
+{
+  return new Block(code);
+}
+
+class_block = space* "{" space*
+code:(
+  method_definition
+/ property
+/ ';'
+/ space+
+)*
+space* "}" space*
+{
+  return new Class_Block(code);
+}
+
+class_definition = "class" space+ name:word block:class_block
+{
+  return new Class_Definition(compress(name), block);
+}
+
+function_definition = "function" space+ name:word parameters:parameters block:block
+{
+  return new Function_Definition(compress(name), parameters, block);
+}
+
+invoke_function = space* name:word arguments:arguments space*
+{
+  return new Invoke_Function(compress(name), arguments);
+}
+
+method_definition = attribute* "function" space+ name:word parameters:parameters block:block
+{
+  name = compress(name);
+  var constructor = (name == '__construct');
+  return new Method_Definition(name, parameters, block, constructor);
+}
+
+parameter = "$" name:word default_value:(space* "=" space* [^,) \n]+)?
+{
+  return new Parameter(compress(name), default_value);
+}
+
+parameters = space* "(" variables:variable_list ")" space*
+{
+  return new Parameters(variables);
+}
+
+property =
+attribute+ name:variable value:(space* "=" space* expression+)? ";"
+{
+  value = value[value.length - 1];
+  return new Property(name, value);
+}
+
+word = [A-Za-z0-1_]+
+
+variable = "$" root:word children:('->' word !(space* "("))*
+index:("[" space* expression* space* "]")?
+{
+  return new Variable(compress(root), compress(children), compress(index));
+}
+
+variable_list = variables:(parameter (space* "," space*)?)*
+{
+return variables[0].filter(only_elements);
+//  return [{
+//  filter: variables[0].filter(only_elements),
+//  original: variables
+//  }];
+}
+
+statement = 
+  ("return" space+ expression* ";")
+/ control_no_parameters
+/ control_with_parameters
+/ "throw" space+ "new" invoke_function ";"
+/ foreach
+
+control_no_parameters =
+space*
+name:("else" / "do") space* block:block
+space*
+{
+  return new Control(name, null, block);
+}
+
+control_with_parameters =
+space*
+name:("if" / "else if" / "while") space* "(" condition:expression+ ")" block:block
+space*
+{
+  return new Control(name, condition, block);
+}
+
+string = 
+string:(("'" [^']* "'")
+/ ("\"" [^"]* "\"")) 
+{ 
+  return new Literal_String(string[1].join(''));
+}
+
+value = 
+"true"i / "false"i
+/ "bool"i / "int"i / "float"i / "string"i
+
+operator =
+  assignment 
+/ comparison
+/ modifier
+
+assignment = 
+variable space* "=" space* expression
+
+modifier_operators = "--" / "++"
+
+modifier = 
+(modifier_operators variable) /
+(variable modifier_operators)
+
+comparison_operators = 
+"=" / "==" / "===" / "!=" / "!==" /
+"+" / "-" / "." / "!" /
+"&&" / "||" /
+">" / "<" / "<=" / ">="
+
+comparison =
+expression2 space* comparison_operators space* expression
+
+foreach =
+"foreach" space*
+"(" space* variable space+ "as" space+ key:(variable space* "=>" space*)? variable space* ")"
+block

@@ -1,0 +1,1 @@
+nodeunit test/tests/test.coffee --reporter default
