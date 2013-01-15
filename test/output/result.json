@@ -17,11 +17,15 @@
             },
             "value": [
               {
-                "type": "invoke_function",
-                "name": "array",
-                "arguments": {
-                  "type": "arguments",
-                  "expressions": []
+                "type": "expression",
+                "contents": {
+                  "type": "create_array",
+                  "arguments": {
+                    "type": "arguments",
+                    "expressions": [
+                      ""
+                    ]
+                  }
                 }
               }
             ]
@@ -36,8 +40,11 @@
             },
             "value": [
               {
-                "type": "literal_string",
-                "text": "node"
+                "type": "expression",
+                "contents": {
+                  "type": "literal_string",
+                  "text": "node"
+                }
               }
             ]
           },
@@ -51,11 +58,15 @@
             },
             "value": [
               {
-                "type": "invoke_function",
-                "name": "array",
-                "arguments": {
-                  "type": "arguments",
-                  "expressions": []
+                "type": "expression",
+                "contents": {
+                  "type": "create_array",
+                  "arguments": {
+                    "type": "arguments",
+                    "expressions": [
+                      ""
+                    ]
+                  }
                 }
               }
             ]
@@ -70,11 +81,15 @@
             },
             "value": [
               {
-                "type": "invoke_function",
-                "name": "array",
-                "arguments": {
-                  "type": "arguments",
-                  "expressions": []
+                "type": "expression",
+                "contents": {
+                  "type": "create_array",
+                  "arguments": {
+                    "type": "arguments",
+                    "expressions": [
+                      ""
+                    ]
+                  }
                 }
               }
             ]
@@ -89,11 +104,15 @@
             },
             "value": [
               {
-                "type": "invoke_function",
-                "name": "array",
-                "arguments": {
-                  "type": "arguments",
-                  "expressions": []
+                "type": "expression",
+                "contents": {
+                  "type": "create_array",
+                  "arguments": {
+                    "type": "arguments",
+                    "expressions": [
+                      ""
+                    ]
+                  }
                 }
               }
             ]
@@ -108,8 +127,11 @@
             },
             "value": [
               {
-                "type": "literal_string",
-                "text": ""
+                "type": "expression",
+                "contents": {
+                  "type": "literal_string",
+                  "text": ""
+                }
               }
             ]
           },
@@ -123,11 +145,15 @@
             },
             "value": [
               {
-                "type": "invoke_function",
-                "name": "array",
-                "arguments": {
-                  "type": "arguments",
-                  "expressions": []
+                "type": "expression",
+                "contents": {
+                  "type": "create_array",
+                  "arguments": {
+                    "type": "arguments",
+                    "expressions": [
+                      ""
+                    ]
+                  }
                 }
               }
             ]
@@ -142,11 +168,15 @@
             },
             "value": [
               {
-                "type": "invoke_function",
-                "name": "array",
-                "arguments": {
-                  "type": "arguments",
-                  "expressions": []
+                "type": "expression",
+                "contents": {
+                  "type": "create_array",
+                  "arguments": {
+                    "type": "arguments",
+                    "expressions": [
+                      ""
+                    ]
+                  }
                 }
               }
             ]
@@ -179,6 +209,11 @@
                   "type": "parameter",
                   "name": "trellis",
                   "default_value": ""
+                },
+                {
+                  "type": "parameter",
+                  "name": "include_links",
+                  "default_value": "true"
                 }
               ]
             },
@@ -189,427 +224,572 @@
                   "type": "control",
                   "name": "if",
                   "condition": [
-                    [
-                      {
-                        "type": "invoke_function",
-                        "name": "get_class",
-                        "arguments": {
-                          "type": "arguments",
-                          "expressions": [
-                            {
-                              "type": "variable",
-                              "name": "trellis",
-                              "children": "",
-                              "index": ""
-                            }
-                          ]
-                        }
-                      },
-                      [],
-                      "!=",
-                      [
-                        " "
-                      ],
-                      [
+                    {
+                      "type": "expression_list",
+                      "expressions": [
                         {
-                          "type": "literal_string",
-                          "text": "Trellis"
+                          "type": "expression",
+                          "contents": {
+                            "type": "invoke_function",
+                            "name": "get_class",
+                            "arguments": {
+                              "type": "arguments",
+                              "expressions": [
+                                {
+                                  "type": "expression",
+                                  "contents": {
+                                    "type": "variable",
+                                    "name": "trellis",
+                                    "children": "",
+                                    "index": ""
+                                  }
+                                }
+                              ]
+                            }
+                          }
                         },
                         [
-                          " "
-                        ],
-                        "&&",
-                        [
-                          " "
-                        ],
-                        "!"
-                      ]
-                    ],
-                    {
-                      "type": "invoke_function",
-                      "name": "is_subclass_of",
-                      "arguments": {
-                        "type": "arguments",
-                        "expressions": [
+                          [],
                           {
-                            "type": "variable",
-                            "name": "trellis",
-                            "children": "",
-                            "index": ""
+                            "type": "operator",
+                            "symbol": "!="
                           },
-                          ",",
-                          [
-                            " "
-                          ],
                           {
-                            "type": "literal_string",
-                            "text": "Trellis"
+                            "type": "expression",
+                            "contents": {
+                              "type": "literal_string",
+                              "text": "Trellis"
+                            }
                           }
-                        ]
-                      }
-                    }
-                  ],
-                  "body": {
-                    "type": "block",
-                    "elements": [
-                      [
-                        "throw",
-                        [
-                          " "
                         ],
-                        "new",
-                        {
-                          "type": "invoke_function",
-                          "name": "Exception",
-                          "arguments": {
-                            "type": "arguments",
-                            "expressions": [
+                        [
+                          [],
+                          {
+                            "type": "operator",
+                            "symbol": "&&"
+                          },
+                          {
+                            "type": "expression",
+                            "contents": [
+                              "!",
+                              [],
                               {
-                                "type": "literal_string",
-                                "text": "An invalid trellis was passed to the Query constructor."
+                                "type": "expression",
+                                "contents": {
+                                  "type": "invoke_function",
+                                  "name": "is_subclass_of",
+                                  "arguments": {
+                                    "type": "arguments",
+                                    "expressions": [
+                                      {
+                                        "type": "expression",
+                                        "contents": {
+                                          "type": "variable",
+                                          "name": "trellis",
+                                          "children": "",
+                                          "index": ""
+                                        }
+                                      },
+                                      {
+                                        "type": "expression",
+                                        "contents": {
+                                          "type": "literal_string",
+                                          "text": "Trellis"
+                                        }
+                                      }
+                                    ]
+                                  }
+                                }
                               }
                             ]
                           }
-                        },
-                        ";"
-                      ],
+                        ]
+                      ]
+                    }
+                  ],
+                  "block": {
+                    "type": "block",
+                    "elements": [
                       [
                         "\n",
                         " ",
                         " ",
                         " ",
+                        " ",
+                        " ",
                         " "
-                      ]
-                    ]
+                      ],
+                      {
+                        "type": "exception_raise",
+                        "expression": {
+                          "type": "expression",
+                          "contents": [
+                            "new",
+                            {
+                              "type": "invoke_function",
+                              "name": "Exception",
+                              "arguments": {
+                                "type": "arguments",
+                                "expressions": [
+                                  {
+                                    "type": "expression",
+                                    "contents": {
+                                      "type": "literal_string",
+                                      "text": "An invalid trellis was passed to the Query constructor."
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ],
+                    "variables": {}
                   }
                 },
                 [
                   {
-                    "type": "variable",
-                    "name": "this",
-                    "children": "->trellis",
-                    "index": ""
-                  },
-                  [
-                    " "
-                  ],
-                  "=",
-                  [
-                    " "
-                  ],
-                  {
-                    "type": "variable",
-                    "name": "trellis",
-                    "children": "",
-                    "index": ""
-                  }
-                ],
-                ";",
-                [
-                  "\n",
-                  " ",
-                  " ",
-                  " ",
-                  " "
-                ],
-                [
-                  {
-                    "type": "variable",
-                    "name": "this",
-                    "children": "->ground",
-                    "index": ""
-                  },
-                  [
-                    " "
-                  ],
-                  "=",
-                  [
-                    " "
-                  ],
-                  {
-                    "type": "variable",
-                    "name": "this",
-                    "children": "->trellis->ground",
-                    "index": ""
-                  }
-                ],
-                ";",
-                [
-                  "\n",
-                  " ",
-                  " ",
-                  " ",
-                  " "
-                ],
-                [
-                  {
-                    "type": "variable",
-                    "name": "this",
-                    "children": "->db",
-                    "index": ""
-                  },
-                  [
-                    " "
-                  ],
-                  "=",
-                  [
-                    " "
-                  ],
-                  {
-                    "type": "variable",
-                    "name": "this",
-                    "children": "->ground->db",
-                    "index": ""
-                  }
-                ],
-                ";",
-                [
-                  "\n",
-                  " ",
-                  " ",
-                  " ",
-                  " "
-                ],
-                [
-                  {
-                    "type": "variable",
-                    "name": "this",
-                    "children": "->main_table",
-                    "index": ""
-                  },
-                  [
-                    " "
-                  ],
-                  "=",
-                  [
-                    " "
-                  ],
-                  [
-                    {
-                      "type": "variable",
-                      "name": "trellis",
-                      "children": "",
-                      "index": ""
-                    },
-                    "->",
-                    {
-                      "type": "invoke_function",
-                      "name": "get_table_name",
-                      "arguments": {
-                        "type": "arguments",
-                        "expressions": []
-                      }
-                    }
-                  ]
-                ],
-                ";",
-                [
-                  "\n",
-                  " ",
-                  " ",
-                  " ",
-                  " "
-                ],
-                [
-                  {
-                    "type": "variable",
-                    "name": "this",
-                    "children": "",
-                    "index": ""
-                  },
-                  "->",
-                  {
-                    "type": "invoke_function",
-                    "name": "add_source",
-                    "arguments": {
-                      "type": "arguments",
-                      "expressions": [
-                        {
+                    "type": "expression_list",
+                    "expressions": [
+                      {
+                        "type": "expression",
+                        "contents": {
                           "type": "variable",
-                          "name": "trellis",
-                          "children": "",
+                          "name": "this",
+                          "children": "->trellis",
                           "index": ""
                         }
+                      },
+                      [
+                        [],
+                        {
+                          "type": "operator",
+                          "symbol": "="
+                        },
+                        {
+                          "type": "expression",
+                          "contents": {
+                            "type": "variable",
+                            "name": "trellis",
+                            "children": "",
+                            "index": ""
+                          }
+                        }
                       ]
-                    }
+                    ]
+                  },
+                  {
+                    "type": "terminator"
                   }
                 ],
-                ";",
                 [
-                  "\n",
-                  " ",
-                  " ",
-                  " ",
-                  " "
+                  {
+                    "type": "expression_list",
+                    "expressions": [
+                      {
+                        "type": "expression",
+                        "contents": {
+                          "type": "variable",
+                          "name": "this",
+                          "children": "->ground",
+                          "index": ""
+                        }
+                      },
+                      [
+                        [],
+                        {
+                          "type": "operator",
+                          "symbol": "="
+                        },
+                        {
+                          "type": "expression",
+                          "contents": {
+                            "type": "variable",
+                            "name": "this",
+                            "children": "->trellis->ground",
+                            "index": ""
+                          }
+                        }
+                      ]
+                    ]
+                  },
+                  {
+                    "type": "terminator"
+                  }
+                ],
+                [
+                  {
+                    "type": "expression_list",
+                    "expressions": [
+                      {
+                        "type": "expression",
+                        "contents": {
+                          "type": "variable",
+                          "name": "this",
+                          "children": "->db",
+                          "index": ""
+                        }
+                      },
+                      [
+                        [],
+                        {
+                          "type": "operator",
+                          "symbol": "="
+                        },
+                        {
+                          "type": "expression",
+                          "contents": {
+                            "type": "variable",
+                            "name": "this",
+                            "children": "->ground->db",
+                            "index": ""
+                          }
+                        }
+                      ]
+                    ]
+                  },
+                  {
+                    "type": "terminator"
+                  }
+                ],
+                [
+                  {
+                    "type": "expression_list",
+                    "expressions": [
+                      {
+                        "type": "expression",
+                        "contents": {
+                          "type": "variable",
+                          "name": "this",
+                          "children": "->main_table",
+                          "index": ""
+                        }
+                      },
+                      [
+                        [],
+                        {
+                          "type": "operator",
+                          "symbol": "="
+                        },
+                        {
+                          "type": "expression",
+                          "contents": {
+                            "type": "invoke_method",
+                            "object": {
+                              "type": "variable",
+                              "name": "trellis",
+                              "children": "",
+                              "index": ""
+                            },
+                            "method": {
+                              "type": "invoke_function",
+                              "name": "get_table_name",
+                              "arguments": {
+                                "type": "arguments",
+                                "expressions": [
+                                  ""
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    ]
+                  },
+                  {
+                    "type": "terminator"
+                  }
+                ],
+                [
+                  {
+                    "type": "expression",
+                    "contents": {
+                      "type": "invoke_method",
+                      "object": {
+                        "type": "variable",
+                        "name": "this",
+                        "children": "",
+                        "index": ""
+                      },
+                      "method": {
+                        "type": "invoke_function",
+                        "name": "add_source",
+                        "arguments": {
+                          "type": "arguments",
+                          "expressions": [
+                            {
+                              "type": "expression",
+                              "contents": {
+                                "type": "variable",
+                                "name": "trellis",
+                                "children": "",
+                                "index": ""
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "terminator"
+                  }
                 ],
                 {
                   "type": "control",
                   "name": "if",
                   "condition": [
                     {
-                      "type": "variable",
-                      "name": "include_links",
-                      "children": "",
-                      "index": ""
+                      "type": "expression",
+                      "contents": {
+                        "type": "variable",
+                        "name": "include_links",
+                        "children": "",
+                        "index": ""
+                      }
                     }
                   ],
-                  "body": {
+                  "block": {
                     "type": "block",
                     "elements": [
                       [
                         {
-                          "type": "variable",
-                          "name": "current_trellis",
-                          "children": "",
-                          "index": ""
+                          "type": "expression_list",
+                          "expressions": [
+                            {
+                              "type": "expression",
+                              "contents": {
+                                "type": "variable",
+                                "name": "current_trellis",
+                                "children": "",
+                                "index": ""
+                              }
+                            },
+                            [
+                              [],
+                              {
+                                "type": "operator",
+                                "symbol": "="
+                              },
+                              {
+                                "type": "expression",
+                                "contents": {
+                                  "type": "variable",
+                                  "name": "trellis",
+                                  "children": "",
+                                  "index": ""
+                                }
+                              }
+                            ]
+                          ]
                         },
-                        [
-                          " "
-                        ],
-                        "=",
-                        [
-                          " "
-                        ],
                         {
-                          "type": "variable",
-                          "name": "trellis",
-                          "children": "",
-                          "index": ""
+                          "type": "terminator"
                         }
-                      ],
-                      ";",
-                      [
-                        "\n",
-                        " ",
-                        " ",
-                        " ",
-                        " ",
-                        " ",
-                        " "
                       ],
                       {
                         "type": "control",
                         "name": "do",
-                        "condition": null,
-                        "body": {
+                        "condition": {
+                          "type": "expression_list",
+                          "expressions": [
+                            {
+                              "type": "expression",
+                              "contents": {
+                                "type": "variable",
+                                "name": "current_trellis",
+                                "children": "",
+                                "index": ""
+                              }
+                            },
+                            [
+                              [],
+                              {
+                                "type": "operator",
+                                "symbol": "="
+                              },
+                              {
+                                "type": "expression",
+                                "contents": {
+                                  "type": "variable",
+                                  "name": "current_trellis",
+                                  "children": "->parent",
+                                  "index": ""
+                                }
+                              }
+                            ]
+                          ]
+                        },
+                        "block": {
                           "type": "block",
                           "elements": [
                             [
-                              "foreach",
-                              [
-                                " "
-                              ],
-                              "(",
-                              [],
-                              {
+                              "\n",
+                              " ",
+                              " ",
+                              " ",
+                              " ",
+                              " ",
+                              " ",
+                              " ",
+                              " "
+                            ],
+                            {
+                              "type": "foreach_object",
+                              "object": {
                                 "type": "variable",
                                 "name": "current_trellis",
                                 "children": "->links",
                                 "index": ""
                               },
-                              [
-                                " "
-                              ],
-                              "as",
-                              [
-                                " "
-                              ],
-                              "",
-                              {
+                              "key": "",
+                              "value": {
                                 "type": "variable",
                                 "name": "link",
                                 "children": "",
                                 "index": ""
                               },
-                              [],
-                              ")",
-                              {
+                              "block": {
                                 "type": "block",
                                 "elements": [
                                   [
                                     {
-                                      "type": "variable",
-                                      "name": "this",
-                                      "children": "",
-                                      "index": ""
-                                    },
-                                    "->",
-                                    {
-                                      "type": "invoke_function",
-                                      "name": "add_link",
-                                      "arguments": {
-                                        "type": "arguments",
-                                        "expressions": [
-                                          {
-                                            "type": "variable",
-                                            "name": "link",
-                                            "children": "",
-                                            "index": ""
+                                      "type": "expression",
+                                      "contents": {
+                                        "type": "invoke_method",
+                                        "object": {
+                                          "type": "variable",
+                                          "name": "this",
+                                          "children": "",
+                                          "index": ""
+                                        },
+                                        "method": {
+                                          "type": "invoke_function",
+                                          "name": "add_link",
+                                          "arguments": {
+                                            "type": "arguments",
+                                            "expressions": [
+                                              {
+                                                "type": "expression",
+                                                "contents": {
+                                                  "type": "variable",
+                                                  "name": "link",
+                                                  "children": "",
+                                                  "index": ""
+                                                }
+                                              }
+                                            ]
                                           }
-                                        ]
+                                        }
                                       }
+                                    },
+                                    {
+                                      "type": "terminator"
                                     }
-                                  ],
-                                  ";",
-                                  [
-                                    "\n",
-                                    " ",
-                                    " ",
-                                    " ",
-                                    " ",
-                                    " ",
-                                    " ",
-                                    " ",
-                                    " "
                                   ]
-                                ]
+                                ],
+                                "variables": {
+                                  "this": {
+                                    "type": "variable",
+                                    "name": "this",
+                                    "children": "",
+                                    "index": ""
+                                  },
+                                  "link": {
+                                    "type": "variable",
+                                    "name": "link",
+                                    "children": "",
+                                    "index": ""
+                                  }
+                                }
                               }
-                            ]
-                          ]
+                            }
+                          ],
+                          "variables": {
+                            "current_trellis": {
+                              "type": "variable",
+                              "name": "current_trellis",
+                              "children": "->links",
+                              "index": ""
+                            },
+                            "link": {
+                              "type": "variable",
+                              "name": "link",
+                              "children": "",
+                              "index": ""
+                            },
+                            "this": {
+                              "type": "variable",
+                              "name": "this",
+                              "children": "",
+                              "index": ""
+                            }
+                          }
                         }
+                      }
+                    ],
+                    "variables": {
+                      "current_trellis": {
+                        "type": "variable",
+                        "name": "current_trellis",
+                        "children": "->links",
+                        "index": ""
                       },
-                      {
-                        "type": "invoke_function",
-                        "name": "while",
-                        "arguments": {
-                          "type": "arguments",
-                          "expressions": [
-                            [
-                              {
-                                "type": "variable",
-                                "name": "current_trellis",
-                                "children": "",
-                                "index": ""
-                              },
-                              [
-                                " "
-                              ],
-                              "=",
-                              [
-                                " "
-                              ],
-                              {
-                                "type": "variable",
-                                "name": "current_trellis",
-                                "children": "->parent",
-                                "index": ""
-                              }
-                            ]
-                          ]
-                        }
+                      "trellis": {
+                        "type": "variable",
+                        "name": "trellis",
+                        "children": "",
+                        "index": ""
                       },
-                      ";",
-                      [
-                        "\n",
-                        " ",
-                        " ",
-                        " ",
-                        " "
-                      ]
-                    ]
+                      "link": {
+                        "type": "variable",
+                        "name": "link",
+                        "children": "",
+                        "index": ""
+                      },
+                      "this": {
+                        "type": "variable",
+                        "name": "this",
+                        "children": "",
+                        "index": ""
+                      }
+                    }
                   }
                 }
-              ]
+              ],
+              "variables": {
+                "trellis": {
+                  "type": "variable",
+                  "name": "trellis",
+                  "children": "",
+                  "index": ""
+                },
+                "this": {
+                  "type": "variable",
+                  "name": "this",
+                  "children": "",
+                  "index": ""
+                },
+                "include_links": {
+                  "type": "variable",
+                  "name": "include_links",
+                  "children": "",
+                  "index": ""
+                },
+                "current_trellis": {
+                  "type": "variable",
+                  "name": "current_trellis",
+                  "children": "->links",
+                  "index": ""
+                },
+                "link": {
+                  "type": "variable",
+                  "name": "link",
+                  "children": "",
+                  "index": ""
+                }
+              }
             },
             "constructor": true
           },
@@ -623,6 +803,11 @@
                   "type": "parameter",
                   "name": "source",
                   "default_value": ""
+                },
+                {
+                  "type": "parameter",
+                  "name": "include_primary_key",
+                  "default_value": "true"
                 }
               ]
             },
@@ -631,244 +816,347 @@
               "elements": [
                 [
                   {
-                    "type": "variable",
-                    "name": "this",
-                    "children": "->sources",
-                    "index": "[]"
-                  },
-                  [
-                    " "
-                  ],
-                  "=",
-                  [
-                    " "
-                  ],
-                  {
-                    "type": "variable",
-                    "name": "source",
-                    "children": "",
-                    "index": ""
-                  }
-                ],
-                ";",
-                [
-                  "\n",
-                  " ",
-                  " ",
-                  " ",
-                  " "
-                ],
-                [
-                  {
-                    "type": "variable",
-                    "name": "table_name",
-                    "children": "",
-                    "index": ""
-                  },
-                  [
-                    " "
-                  ],
-                  "=",
-                  [
-                    " "
-                  ],
-                  [
-                    {
-                      "type": "variable",
-                      "name": "source",
-                      "children": "",
-                      "index": ""
-                    },
-                    "->",
-                    {
-                      "type": "invoke_function",
-                      "name": "get_table_name",
-                      "arguments": {
-                        "type": "arguments",
-                        "expressions": []
+                    "type": "expression",
+                    "contents": {
+                      "type": "array_append",
+                      "variable": {
+                        "type": "variable",
+                        "name": "this",
+                        "children": "->sources",
+                        "index": "[]"
+                      },
+                      "expression": {
+                        "type": "expression",
+                        "contents": {
+                          "type": "variable",
+                          "name": "source",
+                          "children": "",
+                          "index": ""
+                        }
                       }
                     }
-                  ]
-                ],
-                ";",
-                [
-                  "\n",
-                  " ",
-                  " ",
-                  " ",
-                  " "
-                ],
-                [
-                  "foreach",
-                  [
-                    " "
-                  ],
-                  "(",
-                  [],
+                  },
                   {
+                    "type": "terminator"
+                  }
+                ],
+                [
+                  {
+                    "type": "expression_list",
+                    "expressions": [
+                      {
+                        "type": "expression",
+                        "contents": {
+                          "type": "variable",
+                          "name": "table_name",
+                          "children": "",
+                          "index": ""
+                        }
+                      },
+                      [
+                        [],
+                        {
+                          "type": "operator",
+                          "symbol": "="
+                        },
+                        {
+                          "type": "expression",
+                          "contents": {
+                            "type": "invoke_method",
+                            "object": {
+                              "type": "variable",
+                              "name": "source",
+                              "children": "",
+                              "index": ""
+                            },
+                            "method": {
+                              "type": "invoke_function",
+                              "name": "get_table_name",
+                              "arguments": {
+                                "type": "arguments",
+                                "expressions": [
+                                  ""
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    ]
+                  },
+                  {
+                    "type": "terminator"
+                  }
+                ],
+                {
+                  "type": "foreach_object",
+                  "object": {
                     "type": "variable",
                     "name": "source",
                     "children": "->core_properties",
                     "index": ""
                   },
-                  [
-                    " "
-                  ],
-                  "as",
-                  [
-                    " "
-                  ],
-                  "",
-                  {
+                  "key": "",
+                  "value": {
                     "type": "variable",
                     "name": "property",
                     "children": "",
                     "index": ""
                   },
-                  [],
-                  ")",
-                  {
+                  "block": {
                     "type": "block",
                     "elements": [
                       {
-                        "type": "invoke_function",
+                        "type": "control",
                         "name": "if",
-                        "arguments": {
-                          "type": "arguments",
-                          "expressions": [
-                            [
+                        "condition": [
+                          {
+                            "type": "expression_list",
+                            "expressions": [
                               {
-                                "type": "variable",
-                                "name": "property",
-                                "children": "->name",
-                                "index": ""
+                                "type": "expression",
+                                "contents": {
+                                  "type": "variable",
+                                  "name": "property",
+                                  "children": "->name",
+                                  "index": ""
+                                }
                               },
                               [
-                                " "
-                              ],
-                              "!=",
-                              [
-                                " "
-                              ],
-                              [
+                                [],
                                 {
-                                  "type": "variable",
-                                  "name": "source",
-                                  "children": "->primary_key",
-                                  "index": ""
+                                  "type": "operator",
+                                  "symbol": "!="
                                 },
-                                [
-                                  " "
-                                ],
-                                "||",
-                                [
-                                  " "
-                                ],
                                 {
-                                  "type": "variable",
-                                  "name": "include_primary_key",
-                                  "children": "",
-                                  "index": ""
+                                  "type": "expression",
+                                  "contents": {
+                                    "type": "variable",
+                                    "name": "source",
+                                    "children": "->primary_key",
+                                    "index": ""
+                                  }
+                                }
+                              ],
+                              [
+                                [],
+                                {
+                                  "type": "operator",
+                                  "symbol": "||"
+                                },
+                                {
+                                  "type": "expression",
+                                  "contents": {
+                                    "type": "variable",
+                                    "name": "include_primary_key",
+                                    "children": "",
+                                    "index": ""
+                                  }
                                 }
                               ]
                             ]
-                          ]
-                        }
-                      },
-                      [
-                        {
-                          "type": "variable",
-                          "name": "this",
-                          "children": "",
-                          "index": ""
-                        },
-                        "->",
-                        {
-                          "type": "invoke_function",
-                          "name": "add_field",
-                          "arguments": {
-                            "type": "arguments",
-                            "expressions": [
-                              [
-                                {
-                                  "type": "variable",
-                                  "name": "table_name",
-                                  "children": "",
-                                  "index": ""
-                                },
-                                [
-                                  " "
-                                ],
-                                ".",
-                                [
-                                  " "
-                                ],
-                                [
-                                  {
-                                    "type": "literal_string",
-                                    "text": "."
-                                  },
-                                  [
-                                    " "
-                                  ],
-                                  ".",
-                                  [
-                                    " "
-                                  ],
-                                  {
+                          }
+                        ],
+                        "block": {
+                          "type": "block",
+                          "elements": [
+                            [
+                              {
+                                "type": "expression",
+                                "contents": {
+                                  "type": "invoke_method",
+                                  "object": {
                                     "type": "variable",
-                                    "name": "property",
-                                    "children": "->field_name",
+                                    "name": "this",
+                                    "children": "",
                                     "index": ""
+                                  },
+                                  "method": {
+                                    "type": "invoke_function",
+                                    "name": "add_field",
+                                    "arguments": {
+                                      "type": "arguments",
+                                      "expressions": [
+                                        {
+                                          "type": "expression_list",
+                                          "expressions": [
+                                            {
+                                              "type": "expression",
+                                              "contents": {
+                                                "type": "variable",
+                                                "name": "table_name",
+                                                "children": "",
+                                                "index": ""
+                                              }
+                                            },
+                                            [
+                                              [],
+                                              {
+                                                "type": "operator",
+                                                "symbol": "."
+                                              },
+                                              {
+                                                "type": "expression",
+                                                "contents": {
+                                                  "type": "literal_string",
+                                                  "text": "."
+                                                }
+                                              }
+                                            ],
+                                            [
+                                              [],
+                                              {
+                                                "type": "operator",
+                                                "symbol": "."
+                                              },
+                                              {
+                                                "type": "expression",
+                                                "contents": {
+                                                  "type": "variable",
+                                                  "name": "property",
+                                                  "children": "->field_name",
+                                                  "index": ""
+                                                }
+                                              }
+                                            ]
+                                          ]
+                                        }
+                                      ]
+                                    }
                                   }
-                                ]
-                              ]
-                            ]
+                                }
+                              },
+                              {
+                                "type": "terminator"
+                              }
+                            ],
+                            []
+                          ],
+                          "variables": {
+                            "this": {
+                              "type": "variable",
+                              "name": "this",
+                              "children": "",
+                              "index": ""
+                            },
+                            "table_name": {
+                              "type": "variable",
+                              "name": "table_name",
+                              "children": "",
+                              "index": ""
+                            },
+                            "property": {
+                              "type": "variable",
+                              "name": "property",
+                              "children": "->field_name",
+                              "index": ""
+                            }
                           }
                         }
-                      ],
-                      ";",
-                      [
-                        "\n",
-                        " ",
-                        " ",
-                        " ",
-                        " "
-                      ]
-                    ]
-                  }
-                ],
-                [
-                  {
-                    "type": "variable",
-                    "name": "source",
-                    "children": "",
-                    "index": ""
-                  },
-                  "->",
-                  {
-                    "type": "invoke_function",
-                    "name": "parent_query",
-                    "arguments": {
-                      "type": "arguments",
-                      "expressions": [
-                        {
-                          "type": "variable",
-                          "name": "this",
-                          "children": "",
-                          "index": ""
-                        }
-                      ]
+                      }
+                    ],
+                    "variables": {
+                      "property": {
+                        "type": "variable",
+                        "name": "property",
+                        "children": "->field_name",
+                        "index": ""
+                      },
+                      "source": {
+                        "type": "variable",
+                        "name": "source",
+                        "children": "->primary_key",
+                        "index": ""
+                      },
+                      "include_primary_key": {
+                        "type": "variable",
+                        "name": "include_primary_key",
+                        "children": "",
+                        "index": ""
+                      },
+                      "this": {
+                        "type": "variable",
+                        "name": "this",
+                        "children": "",
+                        "index": ""
+                      },
+                      "table_name": {
+                        "type": "variable",
+                        "name": "table_name",
+                        "children": "",
+                        "index": ""
+                      }
                     }
                   }
-                ],
-                ";",
+                },
                 [
-                  "\n",
-                  " ",
-                  " "
+                  {
+                    "type": "expression",
+                    "contents": {
+                      "type": "invoke_method",
+                      "object": {
+                        "type": "variable",
+                        "name": "source",
+                        "children": "",
+                        "index": ""
+                      },
+                      "method": {
+                        "type": "invoke_function",
+                        "name": "parent_query",
+                        "arguments": {
+                          "type": "arguments",
+                          "expressions": [
+                            {
+                              "type": "expression",
+                              "contents": {
+                                "type": "variable",
+                                "name": "this",
+                                "children": "",
+                                "index": ""
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "terminator"
+                  }
                 ]
-              ]
+              ],
+              "variables": {
+                "this": {
+                  "type": "variable",
+                  "name": "this",
+                  "children": "",
+                  "index": ""
+                },
+                "source": {
+                  "type": "variable",
+                  "name": "source",
+                  "children": "",
+                  "index": ""
+                },
+                "table_name": {
+                  "type": "variable",
+                  "name": "table_name",
+                  "children": "",
+                  "index": ""
+                },
+                "property": {
+                  "type": "variable",
+                  "name": "property",
+                  "children": "->field_name",
+                  "index": ""
+                },
+                "include_primary_key": {
+                  "type": "variable",
+                  "name": "include_primary_key",
+                  "children": "",
+                  "index": ""
+                }
+              }
             },
             "constructor": false
           },
@@ -890,32 +1178,45 @@
               "elements": [
                 [
                   {
-                    "type": "variable",
-                    "name": "this",
-                    "children": "->filters",
-                    "index": "[]"
+                    "type": "expression",
+                    "contents": {
+                      "type": "array_append",
+                      "variable": {
+                        "type": "variable",
+                        "name": "this",
+                        "children": "->filters",
+                        "index": "[]"
+                      },
+                      "expression": {
+                        "type": "expression",
+                        "contents": {
+                          "type": "variable",
+                          "name": "clause",
+                          "children": "",
+                          "index": ""
+                        }
+                      }
+                    }
                   },
-                  [
-                    " "
-                  ],
-                  "=",
-                  [
-                    " "
-                  ],
                   {
-                    "type": "variable",
-                    "name": "clause",
-                    "children": "",
-                    "index": ""
+                    "type": "terminator"
                   }
-                ],
-                ";",
-                [
-                  "\n",
-                  " ",
-                  " "
                 ]
-              ]
+              ],
+              "variables": {
+                "this": {
+                  "type": "variable",
+                  "name": "this",
+                  "children": "->filters",
+                  "index": "[]"
+                },
+                "clause": {
+                  "type": "variable",
+                  "name": "clause",
+                  "children": "",
+                  "index": ""
+                }
+              }
             },
             "constructor": false
           },
@@ -937,32 +1238,45 @@
               "elements": [
                 [
                   {
-                    "type": "variable",
-                    "name": "this",
-                    "children": "->fields",
-                    "index": "[]"
+                    "type": "expression",
+                    "contents": {
+                      "type": "array_append",
+                      "variable": {
+                        "type": "variable",
+                        "name": "this",
+                        "children": "->fields",
+                        "index": "[]"
+                      },
+                      "expression": {
+                        "type": "expression",
+                        "contents": {
+                          "type": "variable",
+                          "name": "clause",
+                          "children": "",
+                          "index": ""
+                        }
+                      }
+                    }
                   },
-                  [
-                    " "
-                  ],
-                  "=",
-                  [
-                    " "
-                  ],
                   {
-                    "type": "variable",
-                    "name": "clause",
-                    "children": "",
-                    "index": ""
+                    "type": "terminator"
                   }
-                ],
-                ";",
-                [
-                  "\n",
-                  " ",
-                  " "
                 ]
-              ]
+              ],
+              "variables": {
+                "this": {
+                  "type": "variable",
+                  "name": "this",
+                  "children": "->fields",
+                  "index": "[]"
+                },
+                "clause": {
+                  "type": "variable",
+                  "name": "clause",
+                  "children": "",
+                  "index": ""
+                }
+              }
             },
             "constructor": false
           },
@@ -984,32 +1298,45 @@
               "elements": [
                 [
                   {
-                    "type": "variable",
-                    "name": "this",
-                    "children": "->joins",
-                    "index": "[]"
+                    "type": "expression",
+                    "contents": {
+                      "type": "array_append",
+                      "variable": {
+                        "type": "variable",
+                        "name": "this",
+                        "children": "->joins",
+                        "index": "[]"
+                      },
+                      "expression": {
+                        "type": "expression",
+                        "contents": {
+                          "type": "variable",
+                          "name": "clause",
+                          "children": "",
+                          "index": ""
+                        }
+                      }
+                    }
                   },
-                  [
-                    " "
-                  ],
-                  "=",
-                  [
-                    " "
-                  ],
                   {
-                    "type": "variable",
-                    "name": "clause",
-                    "children": "",
-                    "index": ""
+                    "type": "terminator"
                   }
-                ],
-                ";",
-                [
-                  "\n",
-                  " ",
-                  " "
                 ]
-              ]
+              ],
+              "variables": {
+                "this": {
+                  "type": "variable",
+                  "name": "this",
+                  "children": "->joins",
+                  "index": "[]"
+                },
+                "clause": {
+                  "type": "variable",
+                  "name": "clause",
+                  "children": "",
+                  "index": ""
+                }
+              }
             },
             "constructor": false
           },
@@ -1031,32 +1358,45 @@
               "elements": [
                 [
                   {
-                    "type": "variable",
-                    "name": "this",
-                    "children": "->post_clauses",
-                    "index": "[]"
+                    "type": "expression",
+                    "contents": {
+                      "type": "array_append",
+                      "variable": {
+                        "type": "variable",
+                        "name": "this",
+                        "children": "->post_clauses",
+                        "index": "[]"
+                      },
+                      "expression": {
+                        "type": "expression",
+                        "contents": {
+                          "type": "variable",
+                          "name": "clause",
+                          "children": "",
+                          "index": ""
+                        }
+                      }
+                    }
                   },
-                  [
-                    " "
-                  ],
-                  "=",
-                  [
-                    " "
-                  ],
                   {
-                    "type": "variable",
-                    "name": "clause",
-                    "children": "",
-                    "index": ""
+                    "type": "terminator"
                   }
-                ],
-                ";",
-                [
-                  "\n",
-                  " ",
-                  " "
                 ]
-              ]
+              ],
+              "variables": {
+                "this": {
+                  "type": "variable",
+                  "name": "this",
+                  "children": "->post_clauses",
+                  "index": "[]"
+                },
+                "clause": {
+                  "type": "variable",
+                  "name": "clause",
+                  "children": "",
+                  "index": ""
+                }
+              }
             },
             "constructor": false
           }

@@ -1,50 +1,103 @@
 start = 
-(space* "<?php" space*)? code:code* (space* "?>" space*)?
+space* ("<" "?php" space*)? code:code_with_spaces* (space* "?>")? space*
 {
   return new Code(code);
 }
 
-arguments = space* "(" arguments:(expression / ',' / space+)* ")" space*
+arguments = space* "(" first:expression? others:(space* ',' expression)* ")" space*
 {
-  //arguments = arguments.filter(only_elements);
-  return new Arguments(arguments);
+  expressions = [];
+  if (typeof first !== 'undefined') {
+    others = others.map(function(x) { return x[x.length - 1]; });
+    expressions = [ first ].concat(others);
+  }
+
+  return new Arguments(expressions);
+}
+
+array_append = space* variable:variable & { return variable.index == '[]'; }
+ space* "=" space* expression:expression space*
+{
+  return new Array_Append(variable, expression);
 }
 
 attribute = 
 ("public" / "private" / "protected" / "static" / space+)
 
-code = 
-  block
-/ space+
-/ function_definition
-/ statement
-/ class_definition
-/ expression
-/ ';'
 
-expression =   
-  operator
-/ expression2
+block =
+block_braces / block_simple
 
-expression2 = 
-  value
-/ string
-/ variable "->" invoke_function
-/ variable
-/ invoke_function
-/ "!"
-
-expressions =
-  expression
-/ space+
-
-space = [ \n]
-espace = [ \n] { return ''; }
-
-block = space* "{" space* code:code* space* "}" space*
+block_braces =
+space* "{" code:code_with_spaces* "}" space*
 {
   return new Block(code);
 }
+
+block_simple =
+' '* '\n' ' '* code:code_with_meat space*
+{
+  return new Block(code);
+}
+
+code = 
+  function_definition
+/ statement
+/ class_definition
+/ expression terminator
+/ terminator
+
+code_with_spaces =
+  code
+/ space+
+
+code_with_meat = 
+  code code_with_spaces*
+
+exception_raise = 
+"throw" expression:expression terminator
+{
+  return new Exception_Raise(expression);
+}
+
+expression =
+  expression_list
+/ expression2
+
+expression2 = 
+  space * expression:(array_append
+/ value
+/ "new" invoke_function
+/ string
+/ invoke_method
+/ variable
+/ number
+/ create_array
+/ modifier
+/ invoke_function
+/ "!" space* expression2) space*
+{
+  return new Expression(expression);
+}
+
+expression_list = first:expression2 others:(space* operator expression2)+ space*
+{
+  return new Expression_List([first].concat(others));
+  var result = [];
+  for (var i = 0; i < list.length; ++i) {
+    if (list[i][0] !== null)
+      result.push(list[i][0]);
+  }
+  
+  return {
+    type: 'expression_list',
+    data: result,
+    data2: list
+  };
+}
+
+space = [ \n]
+espace = [ \n] { return ''; }
 
 class_block = space* "{" space*
 code:(
@@ -58,84 +111,118 @@ space* "}" space*
   return new Class_Block(code);
 }
 
-class_definition = "class" space+ name:word block:class_block
+class_definition = "class" space+ name:non_keyword block:class_block
 {
   return new Class_Definition(compress(name), block);
 }
 
-function_definition = "function" space+ name:word parameters:parameters block:block
+create_array = space* "array" arguments:arguments space*
+{
+  return new Create_Array(arguments);
+}
+
+foreach =
+"foreach" space*
+"(" space* object:variable space+ "as" space+ ("$" key:word space* "=>" space*)? value:variable space* ")"
+block:block
+{
+  if (typeof key === 'undefined')
+    key = '';
+
+  return new Foreach_Object(object, compress(key), value, block);
+}
+
+function_definition = "function" space+ name:non_keyword parameters:parameters block:block
 {
   return new Function_Definition(compress(name), parameters, block);
 }
 
-invoke_function = space* name:word arguments:arguments space*
+invoke_function = space* name:non_keyword arguments:arguments space*
 {
+  console.log(compress(name));
   return new Invoke_Function(compress(name), arguments);
 }
 
-method_definition = attribute* "function" space+ name:word parameters:parameters block:block
+invoke_method = object:variable "->" method:invoke_function
+{
+  return new Invoke_Method(object, method);
+}
+
+method_definition = attribute* "function" space+ name:non_keyword parameters:parameters block:block
 {
   name = compress(name);
   var constructor = (name == '__construct');
   return new Method_Definition(name, parameters, block, constructor);
 }
 
-parameter = "$" name:word default_value:(space* "=" space* [^,) \n]+)?
+number = number:('-'? space* [0-9.]+)
 {
+  return compress(number);
+}
+
+default_value = space* "=" space* default_value:[^,)\n]+
+{
+  return compress(default_value);
+}
+
+parameter = "$" name:word default_value:default_value?
+{
+  if (typeof default_value === 'undefined')
+    default_value = '';
+
   return new Parameter(compress(name), default_value);
 }
 
-parameters = space* "(" variables:variable_list ")" space*
+parameters = space* "(" first:parameter? others:(space* ',' space* parameter)* ")" space*
 {
-  return new Parameters(variables);
-}
+  parameters = [];
+  if (typeof first !== 'undefined') {
+    others = others.map(function(x) { return x[x.length - 1]; });
+    parameters = [ first ].concat(others);
+  }
 
+  return new Parameters(parameters);
+}
 property =
-attribute+ name:variable value:(space* "=" space* expression+)? ";"
+attribute+ name:variable value:(space* "=" space* expression+)? terminator
 {
   value = value[value.length - 1];
   return new Property(name, value);
 }
 
-word = [A-Za-z0-1_]+
-
-variable = "$" root:word children:('->' word !(space* "("))*
-index:("[" space* expression* space* "]")?
-{
-  return new Variable(compress(root), compress(children), compress(index));
-}
-
-variable_list = variables:(parameter (space* "," space*)?)*
-{
-return variables[0].filter(only_elements);
-//  return [{
-//  filter: variables[0].filter(only_elements),
-//  original: variables
-//  }];
-}
-
 statement = 
-  ("return" space+ expression* ";")
+  ("return" space+ expression? terminator)
+/ do_while
 / control_no_parameters
 / control_with_parameters
-/ "throw" space+ "new" invoke_function ";"
+/ exception_raise
 / foreach
 
 control_no_parameters =
 space*
-name:("else" / "do") space* block:block
+name:("else") space* block:block
 space*
 {
   return new Control(name, null, block);
 }
 
+do_while =
+space* "do" block:block
+"while" space* "(" expression:expression ")" terminator
+{
+  return new Control('do', expression, block);
+}
+
 control_with_parameters =
 space*
-name:("if" / "else if" / "while") space* "(" condition:expression+ ")" block:block
+name:(keyword_with_parameter) space* "(" condition:expression+ ")" block:block
 space*
 {
   return new Control(name, condition, block);
 }
+
+keyword_with_parameter = 
+"if" / "else if" / "while"
 
 string = 
 string:(("'" [^']* "'")
@@ -148,13 +235,14 @@ value =
 "true"i / "false"i
 / "bool"i / "int"i / "float"i / "string"i
 
-operator =
-  assignment 
-/ comparison
-/ modifier
-
 assignment = 
-variable space* "=" space* expression
+variable:variable space* "=" space* expression:expression
+{
+  if (variable.index == '[]')
+    return new Array_Append(variable, expression);
+  else
+    return new Assignment(variable, expression);
+}
 
 modifier_operators = "--" / "++"
 
@@ -162,16 +250,36 @@ modifier =
 (modifier_operators variable) /
 (variable modifier_operators)
 
-comparison_operators = 
+non_keyword = 
+!keyword_with_parameter word
+
+operator =
+  symbol:(comparison_operator
+/ action_operator)
+{
+  return new Operator(symbol);
+}
+  
+comparison_operator = 
 "=" / "==" / "===" / "!=" / "!==" /
-"+" / "-" / "." / "!" /
 "&&" / "||" /
 ">" / "<" / "<=" / ">="
 
-comparison =
-expression2 space* comparison_operators space* expression
+action_operator = 
+"+" / "-" / "." / "/" / "*"
 
-foreach =
-"foreach" space*
-"(" space* variable space+ "as" space+ key:(variable space* "=>" space*)? variable space* ")"
-block
+comparison =
+expression2 space* comparison_operator space* expression
+
+terminator = space* ';' space*
+{
+  return new Terminator();
+}
+
+word = [A-Za-z0-1_]+
+
+variable = "$" root:word children:('->' word !(space* "("))*
+index:("[" space* expression* space* "]")?
+{
+  return new Variable(compress(root), compress(children), compress(index));
+}
