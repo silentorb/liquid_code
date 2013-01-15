@@ -1,4 +1,4 @@
-var compress, initialize, only_elements;
+var Parser, compress, initialize, only_elements;
 
 compress = function(item) {
   var i, result, _i, _len;
@@ -22,12 +22,14 @@ only_elements = function(element) {
 };
 
 initialize = function() {
-  var define_element, element, elements, find_variables, get_value, initialize_block, name, _results;
+  var define_element, element, elements, find_variables, get_value, initialize_block, initialize_string, name, _results;
   find_variables = function(item, variables) {
     var child, key, property, _i, _len;
     variables = variables || {};
+    if (!item) {
+      return variables;
+    }
     if (typeof item === 'object' && item.length) {
-      console.log('(list)');
       for (_i = 0, _len = item.length; _i < _len; _i++) {
         child = item[_i];
         variables = find_variables(child, variables);
@@ -38,7 +40,6 @@ initialize = function() {
       } else {
         for (key in item) {
           property = item[key];
-          console.log(key);
           variables = find_variables(property, variables);
         }
       }
@@ -47,6 +48,25 @@ initialize = function() {
   };
   initialize_block = function() {
     return this.variables = find_variables(this.elements);
+  };
+  initialize_string = function() {
+    var current_string, item, new_text, _i, _len, _ref;
+    new_text = [];
+    current_string = '';
+    _ref = this.text;
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      item = _ref[_i];
+      if (typeof item === 'string') {
+        current_string += item;
+      } else {
+        if (current_string.length > 0) {
+          new_text.push(current_string);
+        }
+        current_string = '';
+        new_text.push(item);
+      }
+    }
+    return this.text = new_text;
   };
   get_value = function(value, type) {
     if (type === 'compress') {
@@ -68,6 +88,7 @@ initialize = function() {
         }
         this[key] = args[x++];
       }
+      console.log(name, this);
       if (element.initialize) {
         element.initialize.apply(this, args);
       }
@@ -94,6 +115,7 @@ initialize = function() {
     },
     Class_Definition: {
       name: 'compress',
+      parent: 'string',
       block: 'list'
     },
     Class_Block: {
@@ -101,6 +123,10 @@ initialize = function() {
     },
     Code: {
       elements: 'list'
+    },
+    Comment: {
+      text: 'string',
+      multiline: 'bool'
     },
     Control: {
       name: 'string',
@@ -138,8 +164,19 @@ initialize = function() {
       object: 'object',
       method: 'object'
     },
+    Invoke_Static_Member: {
+      class_name: 'string',
+      target: 'object'
+    },
+    Invoke_Variable_Function: {
+      variable: 'object',
+      "arguments": 'list'
+    },
     Literal_String: {
-      text: 'string'
+      text: 'string',
+      quotes: 'string',
+      label: 'string',
+      initialize: initialize_string
     },
     Method_Definition: {
       name: 'compress',
@@ -167,7 +204,8 @@ initialize = function() {
     Variable: {
       name: 'compress',
       children: 'compress',
-      index: 'compress'
+      index: 'compress',
+      global: 'bool'
     }
   };
   _results = [];
@@ -179,3 +217,7 @@ initialize = function() {
 };
 
 initialize();
+
+Parser = {
+  label: ''
+};

@@ -15,9 +15,10 @@ only_elements = (element) ->
 initialize = () ->
   find_variables = (item, variables)->
     variables = variables || {}
+    return variables if !item
 #    console.log '*' + typeof item
     if typeof item == 'object' && item.length
-      console.log '(list)'
+#      console.log '(list)'
       for child in item
         variables = find_variables(child, variables)
     else if typeof item == 'object'
@@ -25,13 +26,27 @@ initialize = () ->
         variables[item.name] = item
       else
         for key, property of item
-          console.log key
+#          console.log key
           variables = find_variables(property, variables)
 
     variables
   
   initialize_block = ()->
     @variables = find_variables(@elements)
+  
+  initialize_string = ()->
+    # compress consecutive string items
+    new_text = []
+    current_string = ''
+    for item in @text
+      if typeof item == 'string'
+        current_string += item
+      else
+        if current_string.length > 0
+          new_text.push current_string
+        current_string = ''
+        new_text.push item
+    @text = new_text
   
   get_value = (value, type)->
     if type == 'compress'
@@ -49,7 +64,7 @@ initialize = () ->
         this[key] = args[x++]
 #        console.log '*', key
 #      console.log 'type', @type
-#      console.log name, this
+      console.log name, this
       if element.initialize
         element.initialize.apply this, args
       this
@@ -70,11 +85,15 @@ initialize = () ->
       initialize: initialize_block
     Class_Definition:
       name: 'compress'
+      parent: 'string'
       block: 'list'
     Class_Block:
       elements: 'string'    
     Code:
       elements: 'list'
+    Comment:
+      text: 'string'
+      multiline: 'bool'
     Control:
       name: 'string'
       condition: 'string'
@@ -102,8 +121,17 @@ initialize = () ->
     Invoke_Method:
       object: 'object'
       method: 'object'
+    Invoke_Static_Member:
+      class_name: 'string'
+      target: 'object'
+    Invoke_Variable_Function:
+      variable: 'object'
+      arguments: 'list'
     Literal_String:
       text: 'string'
+      quotes: 'string'
+      label: 'string'
+      initialize: initialize_string
     Method_Definition:
       name: 'compress'
       parameters: 'string'
@@ -125,8 +153,12 @@ initialize = () ->
       name: 'compress'
       children: 'compress'
       index: 'compress'
+      global: 'bool'
       
   for name, element of elements
     define_element name, element
 
 initialize()
+
+Parser = 
+  label: ''

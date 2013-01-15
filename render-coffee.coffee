@@ -3,7 +3,7 @@ MetaHub.node_module module, ->
   Ice = MetaHub.Meta_Object.subclass("Ice",
     render: (liquid) ->
   )
-  JavaScript = Ice.subclass("JavaScript",
+  CoffeeScript = Ice.subclass("CoffeeScript",
     depth: 0
     indent_amount: 2
     indent: ->
@@ -44,20 +44,17 @@ MetaHub.node_module module, ->
         ''
     
     render_function_body: (element)->
-      text = "(" + @render(element.parameters) + ")"
+      parameters = @render(element.parameters)
+      text = ''
+      if parameters.length > 0
+        text += "(" + parameters + ")"
+      text += "->"
       header = ''
       for parameter in element.parameters.variables
         if parameter.default_value
 #          header += parameter.name + ' = ' + parameter.name + ' || ' + @render(parameter.default_value) + ";\n"
           header += 'if (' + parameter.name + ' === undefined)\n' + parameter.name + ' = ' + @render(parameter.default_value) + ";\n"
-          
 
-      params = element.parameters.variables.map (x) -> x.name
-      params.push('this') #filter out this variable
-      vars = Object.keys(element.block.variables)
-        .filter (x)-> params.indexOf(x) == -1
-      if vars.length > 0
-        header += 'var ' + vars.join(', ') + ";\n"
       text += @render(element.block, header)
       text
       
@@ -78,7 +75,8 @@ MetaHub.node_module module, ->
         if prefix is undefined
           prefix = ''  
         ++@depth
-        result = " {\n" + @indent() + prefix + @render_elements(element.elements) + "\n}\n"
+        result = "\n" + @indent() + prefix
+        result += @render_elements(element.elements, "\n" + @indent()) + "\n"
         --@depth
         result
 
@@ -93,7 +91,7 @@ MetaHub.node_module module, ->
 
       class_definition: (element) ->
         parent = element.parent || 'Meta_Object'
-        "var " + element.name + " = " + parent + ".subclass('" +
+        element.name + " = " + parent + ".subclass('" +
         element.name + "', {\n" + @render(element.block) + "});"
 
       code: (element) ->
@@ -127,16 +125,16 @@ MetaHub.node_module module, ->
         @render_elements(element.expressions, ' ')
         
       function_definition: (element) ->
-        "function " + element.name + @render_function_body element
+        element.name + ' = ' + @render_function_body element
 
       foreach_object: (element)->
-        key = element.key || 'i'
         object = @render(element.object)
         value = @render(element.value)
-        text = 'for (var ' + key + ' in ' + object + ") {\n";
-        text += value + ' = ' + object + '[' + key + "];\n"
-        text += @render(element.block) + '}'
-        text
+        key = ''
+        if element.key
+          key = key + ', '
+        text = 'for ' + key + value + ' of ' + object
+        text += @render(element.block)
         
       invoke_function: (element) ->
 #        console.log element.arguments
@@ -159,6 +157,13 @@ MetaHub.node_module module, ->
         if element.quotes = 'heredoc'
 #          lines = element.text
 #          '<<<' + element.label + @render(element.text) + element.label
+          text = '"""\n'
+          for item in element.text
+            if typeof item == 'string'
+              text += item
+            else if item.type == 'variable'
+              text += '#{' + @render(item) + '}'
+          text += '\n"""\n'
         else
           if element.quotes = 'single'
             quote = "'"
@@ -171,7 +176,7 @@ MetaHub.node_module module, ->
           name = 'initialize'
         else
           name = element.name
-        name + ": function" + @render_function_body element
+        name + ": " + @render_function_body element
 #        name + ": function" + "(" + @render(element.parameters) + ")" + @render(element.block)
 
       operator: (element)->
@@ -194,7 +199,7 @@ MetaHub.node_module module, ->
         @render(element.variable) + ': ' + @render(value)
         
       terminator: (element)->
-        ";\n"
+        ''
 
       variable: (element, hide_index) ->
         text = element.name + element.children.replace(/\->/g, ".")

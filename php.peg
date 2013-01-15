@@ -29,7 +29,7 @@ block =
 block_braces / block_simple
 
 block_braces =
-space* "{" code:code_with_spaces* "}" space*
+space* "{" space* code:code_with_spaces* "}" space*
 {
   return new Block(code);
 }
@@ -42,6 +42,7 @@ block_simple =
 
 code = 
   function_definition
+/ comment
 / statement
 / class_definition
 / expression terminator
@@ -54,6 +55,18 @@ code_with_spaces =
 code_with_meat = 
   code code_with_spaces*
 
+comment = comment_line / comment_block
+
+comment_line = "//" text:[^\n]*
+{
+  return new Comment(compress(text), 0);
+}
+
+comment_block = "/*"  text:(! "*/".)+ "*/"
+{
+  return new Comment(compress(text), 1);
+}
+
 exception_raise = 
 "throw" expression:expression terminator
 {
@@ -65,22 +78,28 @@ expression =
 / expression2
 
 expression2 = 
-  space * expression:(array_append
+space * expression:(
+  array_append
 / value
 / "new" invoke_function
 / string
+/ invoke_static_member
 / invoke_method
+/ invoke_variable_function
+/ "new" invoke_variable_function
 / variable
 / number
 / create_array
 / modifier
 / invoke_function
+/ comment
 / "!" space* expression2) space*
 {
   return new Expression(expression);
 }
 
-expression_list = first:expression2 others:(space* operator expression2)+ space*
+expression_list = first:expression2
+others:(space* op:operator exp:expression2 { return [ op, exp ]; })+ space*
 {
   return new Expression_List([first].concat(others));
   var result = [];
@@ -102,6 +121,7 @@ espace = [ \n] { return ''; }
 class_block = space* "{" space*
 code:(
   method_definition
+/ comment
 / property
 / ';'
 / space+
@@ -111,9 +131,11 @@ space* "}" space*
   return new Class_Block(code);
 }
 
-class_definition = "class" space+ name:non_keyword block:class_block
+class_definition = "class" space+ name:non_keyword 
+parent:(space+ "extends" space+ parent:non_keyword { return parent; })? block:class_block
 {
-  return new Class_Definition(compress(name), block);
+  
+  return new Class_Definition(compress(name), parent, block);
 }
 
 create_array = space* "array" arguments:arguments space*
@@ -137,15 +159,34 @@ function_definition = "function" space+ name:non_keyword parameters:parameters b
   return new Function_Definition(compress(name), parameters, block);
 }
 
+// The most tricky rule in this grammar.
+heredoc =
+space* "<<<" (label1:word "\n" { Parser.label = label1; return label1; })
+text:(label2:(word / variable / .) ! { return label2 == Parser.label; })+
+word space*
+{
+  text = text.map(function(x) { return x[0]});
+  return new Literal_String(text, 'heredoc', Parser.label);
+}
+
 invoke_function = space* name:non_keyword arguments:arguments space*
 {
-  console.log(compress(name));
   return new Invoke_Function(compress(name), arguments);
 }
 
 invoke_method = object:variable "->" method:invoke_function
 {
   return new Invoke_Method(object, method);
+}
+
+invoke_static_member = class_name:word "::" target:(variable / invoke_function)
+{
+  return new Invoke_Static_Member(class_name, target);
+}
+
+invoke_variable_function = space* variable:variable arguments:arguments space*
+{
+  return new Invoke_Variable_Function(variable, arguments);
 }
 
 method_definition = attribute* "function" space+ name:non_keyword parameters:parameters block:block
@@ -224,16 +265,21 @@ space*
 keyword_with_parameter = 
 "if" / "else if" / "while"
 
-string = 
-string:(("'" [^']* "'")
-/ ("\"" [^"]* "\"")) 
+string = single_quote / double_quote / heredoc
+single_quote = "'" text:[^']* "'"
 { 
-  return new Literal_String(string[1].join(''));
+  return new Literal_String(compress(text), 'single');
+}
+
+double_quote = '"' text:[^"]* '"'
+{ 
+  return new Literal_String(compress(text), 'double');
 }
 
 value = 
 "true"i / "false"i
 / "bool"i / "int"i / "float"i / "string"i
+/ "null"i
 
 assignment = 
 variable:variable space* "=" space* expression:expression
@@ -261,7 +307,7 @@ operator =
 }
   
 comparison_operator = 
-"=" / "==" / "===" / "!=" / "!==" /
+"===" / "==" / "=" / "!=" / "!==" /
 "&&" / "||" /
 ">" / "<" / "<=" / ">="
 
@@ -276,7 +322,10 @@ terminator = space* ';' space*
   return new Terminator();
 }
 
-word = [A-Za-z0-1_]+
+word = word:[A-Za-z0-1_]+
+{
+  return word.join('');
+}
 
 variable = "$" root:word children:('->' word !(space* "("))*
 index:("[" space* expression* space* "]")?

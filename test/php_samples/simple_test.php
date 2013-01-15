@@ -1,6 +1,9 @@
 <?php
 
-   function test($y = 3, $z) {
-     $x = $y;
-   }
+function test() {
+foreach($list as $item) {
+$x = $item;
+$y = $item;
+}
+}
 ?>
