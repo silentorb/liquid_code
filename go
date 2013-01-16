@@ -1,1 +1,1 @@
-coffee convert.coffee ../ground_php/inc/Ground.inc ../ground_js/classes/Ground.coffee
+coffee convert.coffee ../ground_php/inc/$1.inc ../ground_js/classes/$1.coffee

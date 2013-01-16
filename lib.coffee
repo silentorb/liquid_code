@@ -16,9 +16,7 @@ initialize = () ->
   find_variables = (item, variables)->
     variables = variables || {}
     return variables if !item
-#    console.log '*' + typeof item
     if typeof item == 'object' && item.length
-#      console.log '(list)'
       for child in item
         variables = find_variables(child, variables)
     else if typeof item == 'object'
@@ -26,7 +24,6 @@ initialize = () ->
         variables[item.name] = item
       else
         for key, property of item
-#          console.log key
           variables = find_variables(property, variables)
 
     variables
@@ -36,6 +33,7 @@ initialize = () ->
   
   initialize_string = ()->
     # compress consecutive string items
+    return if typeof @text == 'string'
     new_text = []
     current_string = ''
     for item in @text
@@ -46,6 +44,8 @@ initialize = () ->
           new_text.push current_string
         current_string = ''
         new_text.push item
+    if current_string.length > 0
+      new_text.push current_string
     @text = new_text
   
   get_value = (value, type)->
@@ -62,8 +62,6 @@ initialize = () ->
         break if x > args.length || key == 'initialize'
         #this[key] = get_value(args[x++], type)
         this[key] = args[x++]
-#        console.log '*', key
-#      console.log 'type', @type
 #      console.log name, this
       if element.initialize
         element.initialize.apply this, args
@@ -83,7 +81,7 @@ initialize = () ->
     Block:
       elements: 'list'
       initialize: initialize_block
-    Case:
+    Case_Statement:
       value: 'object'
       code: 'code'
     Class_Definition:
@@ -94,6 +92,9 @@ initialize = () ->
       elements: 'string'    
     Code:
       elements: 'list'
+    Command:
+      name: 'string'
+      expression: 'object'
     Comment:
       text: 'string'
       multiline: 'bool'
@@ -103,15 +104,13 @@ initialize = () ->
       block: 'list'
     Conversion:
       out_type: 'string'
+      expression: 'object'
     Create_Array:
       arguments: 'list'
     Exception_Raise:
       expression: 'object'
     Expression:
       contents: 'object',
-      negate: 'bool'
-      modifiers: 'list'
-      
     Expression_List:
       expressions: 'list'
     Foreach_Object:
@@ -123,6 +122,9 @@ initialize = () ->
       name: 'compress'
       parameters: 'string'
       block: 'list'
+    Instantiate_Class:
+      name: 'string'
+      arguments: 'list'
     Invoke_Function:
       name: 'compress'
       arguments: 'list'
@@ -155,6 +157,8 @@ initialize = () ->
     Property:
       variable: 'string'
       value: 'string'
+    Regex:
+      text: 'string'
     Switch_Statement:
       variable: 'object'
       cases: 'list'
@@ -174,11 +178,3 @@ initialize()
 
 Parser = 
   label: ''
-  
-create_expression = (contents, negate)->
-  if contents.type == 'expression'
-    contents.negate = negate if negate != undefined
-    return contents
-  else
-    negate = negate || false
-    return new Expression(contents, negate)

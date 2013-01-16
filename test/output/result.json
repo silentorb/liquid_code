@@ -1,1 +1,44 @@
-undefined
+{
+  "type": "code",
+  "elements": [
+    [
+      {
+        "type": "expression",
+        "contents": {
+          "type": "invoke_function",
+          "name": "preg_match",
+          "arguments": {
+            "type": "arguments",
+            "expressions": [
+              {
+                "type": "expression",
+                "contents": {
+                  "type": "regex",
+                  "text": "^[A-Z_0-9]+\\s*(?:\\(\\d+\\))?[\\w\\s]*$"
+                }
+              },
+              {
+                "type": "expression",
+                "contents": {
+                  "type": "variable",
+                  "name": "field_type",
+                  "children": "",
+                  "index": "",
+                  "root": {
+                    "type": "variable",
+                    "name": "type",
+                    "children": "",
+                    "index": ""
+                  }
+                }
+              }
+            ]
+          }
+        }
+      },
+      {
+        "type": "terminator"
+      }
+    ]
+  ]
+}

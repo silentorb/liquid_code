@@ -3,9 +3,21 @@ MetaHub.node_module module, ->
   Ice = MetaHub.Meta_Object.subclass("Ice",
     render: (liquid) ->
   )
+  
+  function_conversions =
+    'json_encode': 'JSON.stringify'
+    'print_r': 'console.log'
+    'unset': 'delete $1'
+    'array_unshift': '$1.unshift($2)'
+    'property_exists': '$1[$2] != undefined'
+    'array_merge': 'MetaHub.extend'
+    'get_object_vars': '$1'
+    'preg_match': '$2.match($1)'
+
   CoffeeScript = Ice.subclass("CoffeeScript",
     depth: 0
     indent_amount: 2
+    function_conversions: function_conversions
     indent: ->
       result = ""
       x = 0
@@ -21,7 +33,6 @@ MetaHub.node_module module, ->
       if liquid.type
         type = @classes[liquid.type]
         if type
-#          console.log @indent() + liquid.type
           type.apply this, args
       else if typeof liquid isnt "string" and liquid.length > 0
         @render_elements liquid
@@ -91,32 +102,29 @@ MetaHub.node_module module, ->
         @render_block elements
  
       class_block: (element) ->
-        ++@depth
-        elements = element.elements.filter (element) ->
-          element.type
-        indent = @indent()
-        elements = elements.map (element) =>
-          indent + @render(element)
-        --@depth
-        "\n" + elements.join("\n")    
+        @render_block element.elements.filter (x) -> x.type
 
       class_definition: (element) ->
         parent = element.parent || 'Meta_Object'
         element.name + " = " + parent + ".subclass '" +
         element.name + "'," + @render(element.block)
-
-      case_statement: (element)->
-        text += @indent + 'when ' + @render(element.value)
-        text += @render_block(element.code)
         
       code: (element) ->
         @render_elements element.elements
-        
+      
+      command: (element)->
+        text = element.name
+        text = 'console.log' if text == 'echo' || text == 'print'
+        text = '#' + text if text == 'global'
+        if element.expression
+          text += " " + @render element.expression
+        text
+
       comment: (element)->
         if element.multiline
           '/*' + element.text + '*/'
         else
-          '//' + element.text
+          '#' + element.text
 
       control: (element) ->
         if element.name == 'do'
@@ -127,6 +135,13 @@ MetaHub.node_module module, ->
           text += " " + @render(element.condition)  if element.condition
           text + @render(element.block)
       
+      conversion: (element)->
+        exp = @render element.expression
+        switch element.out_type
+          when 'int' then "parseInt(" + exp + ")"
+          when 'float' then "parseFloat(" + exp + ")"
+          when 'string' then exp + ".toString()"
+           
       create_array: (element)->
         '[' + @render(element.arguments) + ']'
         
@@ -135,7 +150,7 @@ MetaHub.node_module module, ->
         
       expression: (element)->
         text = ''
-        text += '!' if element.negate
+        text += '!' if element.negate == true
         text += @render(element.contents)
 
       expression_list: (element)->
@@ -149,20 +164,47 @@ MetaHub.node_module module, ->
         value = @render(element.value)
         key = ''
         if element.key
-          key = key + ', '
+          key = @render(element.key) + ', '
         text = 'for ' + key + value + ' of ' + object
         text += @render(element.block)
-        
+
+      instantiate_class: (element) ->
+        if element.name == 'stdClass'
+          "{}"
+#          "new" +  + "(" + @render(element.arguments) + ")"
+        else
+          element.name + ".create(" + @render(element.arguments) + ")"
+ 
       invoke_function: (element) ->
-#        console.log element.arguments
         if element.arguments && element.arguments.expressions.length > 0
           args = @render(element.arguments)
         else
           args = ''
-        element.name + "(" + args + ")"
+
+        text = ''
+        if element.root
+          text += @render(element.root) + '.'        
+        
+        name = element.name
+        conversion = @function_conversions[element.name]
+        if conversion
+          if conversion.match /\$\d/
+            expression = conversion.replace /\$0/g, args
+            return expression.replace /\$(\d)/g, (match, index)=>
+              @render element.arguments.expressions[index - 1]
+          name = conversion
+          
+        text += name + "(" + args + ")"
+
+#            element.arguments.expressions[
 
       invoke_method: (element)->
-        @render(element.object) + '.' + @render(element.method)
+        object = @render(element.object)
+        if object = 'this'
+          object = '@'
+        else
+          object += '.'
+        object + @render(element.method)
       
       invoke_static_member: (element)->
         element.class_name + '.' + @render(element.target)
@@ -200,6 +242,7 @@ MetaHub.node_module module, ->
         conversions =
           '===': '=='
           '!==': '!='
+          '.=': '+='
         
         if conversions[element.symbol] != undefined
           return conversions[element.symbol]
@@ -219,23 +262,47 @@ MetaHub.node_module module, ->
         value = element.value || "''"
         @render(element.variable) + ': ' + @render(value)
       
+      regex: (element)->
+        "/" + element.text + "/"
+
       switch_statement: (element)->
-        text = 'switch' + @render(element.variable) + "\n"
+        text = 'switch ' + @render(element.variable) + "\n"
         @depth++
+        cases = []
+        fall_through = []
         for c in element.cases
-          text += @render c
+          if c.code.length == 0
+            fall_through.push @render(c.value)
+          else
+            new_case =
+              type: 'case_statement'
+              values: fall_through.concat @render(c.value)
+              code: c.code
+            cases.push new_case
+            fall_through = []
+
+        for c in cases
+          text += @indent() + 'when ' + c.values.join(', ')
+          text += @render_block(c.code)
+        
         if element.default_case
-          text += @render element.default_case
+          text += @indent() + 'else '
+          text += @render_block(element.default_case.code)
           
         @depth--
+        text
         
       terminator: (element)->
         ''
 
       variable: (element, hide_index) ->
-        text = element.name + element.children.replace(/\->/g, ".")
+        text = ''
+        if element.root
+          text += @render(element.root) + '.'
+#        text = [element.name].concat(element.children).join('.')
+        text += element.name
         text = text.replace /^this\./, '@'
-        if !hide_index
-          text += @render(element.index)
+        if !hide_index && element.index
+          text += "[" + @render(element.index) + "]"
         text
   )

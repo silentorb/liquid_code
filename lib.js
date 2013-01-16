@@ -1,4 +1,4 @@
-var Parser, compress, create_expression, initialize, only_elements;
+var Parser, compress, initialize, only_elements;
 
 compress = function(item) {
   var i, result, _i, _len;
@@ -51,6 +51,9 @@ initialize = function() {
   };
   initialize_string = function() {
     var current_string, item, new_text, _i, _len, _ref;
+    if (typeof this.text === 'string') {
+      return;
+    }
     new_text = [];
     current_string = '';
     _ref = this.text;
@@ -65,6 +68,9 @@ initialize = function() {
         current_string = '';
         new_text.push(item);
       }
+    }
+    if (current_string.length > 0) {
+      new_text.push(current_string);
     }
     return this.text = new_text;
   };
@@ -112,7 +118,7 @@ initialize = function() {
       elements: 'list',
       initialize: initialize_block
     },
-    Case: {
+    Case_Statement: {
       value: 'object',
       code: 'code'
     },
@@ -127,6 +133,10 @@ initialize = function() {
     Code: {
       elements: 'list'
     },
+    Command: {
+      name: 'string',
+      expression: 'object'
+    },
     Comment: {
       text: 'string',
       multiline: 'bool'
@@ -137,7 +147,8 @@ initialize = function() {
       block: 'list'
     },
     Conversion: {
-      out_type: 'string'
+      out_type: 'string',
+      expression: 'object'
     },
     Create_Array: {
       "arguments": 'list'
@@ -146,9 +157,7 @@ initialize = function() {
       expression: 'object'
     },
     Expression: {
-      contents: 'object',
-      negate: 'bool',
-      modifiers: 'list'
+      contents: 'object'
     },
     Expression_List: {
       expressions: 'list'
@@ -163,6 +172,10 @@ initialize = function() {
       name: 'compress',
       parameters: 'string',
       block: 'list'
+    },
+    Instantiate_Class: {
+      name: 'string',
+      "arguments": 'list'
     },
     Invoke_Function: {
       name: 'compress',
@@ -206,6 +219,9 @@ initialize = function() {
       variable: 'string',
       value: 'string'
     },
+    Regex: {
+      text: 'string'
+    },
     Switch_Statement: {
       variable: 'object',
       cases: 'list',
@@ -233,16 +249,4 @@ initialize();
 
 Parser = {
   label: ''
-};
-
-create_expression = function(contents, negate) {
-  if (contents.type === 'expression') {
-    if (negate !== void 0) {
-      contents.negate = negate;
-    }
-    return contents;
-  } else {
-    negate = negate || false;
-    return new Expression(contents, negate);
-  }
 };
