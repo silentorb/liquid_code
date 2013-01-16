@@ -1,4 +1,4 @@
-var Parser, compress, initialize, only_elements;
+var Parser, compress, create_expression, initialize, only_elements;
 
 compress = function(item) {
   var i, result, _i, _len;
@@ -88,7 +88,6 @@ initialize = function() {
         }
         this[key] = args[x++];
       }
-      console.log(name, this);
       if (element.initialize) {
         element.initialize.apply(this, args);
       }
@@ -113,6 +112,10 @@ initialize = function() {
       elements: 'list',
       initialize: initialize_block
     },
+    Case: {
+      value: 'object',
+      code: 'code'
+    },
     Class_Definition: {
       name: 'compress',
       parent: 'string',
@@ -133,6 +136,9 @@ initialize = function() {
       condition: 'string',
       block: 'list'
     },
+    Conversion: {
+      out_type: 'string'
+    },
     Create_Array: {
       "arguments": 'list'
     },
@@ -140,7 +146,9 @@ initialize = function() {
       expression: 'object'
     },
     Expression: {
-      contents: 'object'
+      contents: 'object',
+      negate: 'bool',
+      modifiers: 'list'
     },
     Expression_List: {
       expressions: 'list'
@@ -198,6 +206,11 @@ initialize = function() {
       variable: 'string',
       value: 'string'
     },
+    Switch_Statement: {
+      variable: 'object',
+      cases: 'list',
+      default_case: 'object'
+    },
     Terminator: {
       dummy: 'string'
     },
@@ -220,4 +233,16 @@ initialize();
 
 Parser = {
   label: ''
+};
+
+create_expression = function(contents, negate) {
+  if (contents.type === 'expression') {
+    if (negate !== void 0) {
+      contents.negate = negate;
+    }
+    return contents;
+  } else {
+    negate = negate || false;
+    return new Expression(contents, negate);
+  }
 };

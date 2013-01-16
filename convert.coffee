@@ -13,6 +13,6 @@ code = load_file(process.argv[2])
 liquid = Liquid.parse(code)
 json = JSON.stringify(liquid, null, "  ")
 fs.writeFileSync "./test/output/result.json", json, "ascii"
-ice = JavaScript.create()
+ice = CoffeeScript.create()
 output = ice.render(liquid)
 fs.writeFileSync process.argv[3], output, "ascii"

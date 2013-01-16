@@ -64,7 +64,7 @@ initialize = () ->
         this[key] = args[x++]
 #        console.log '*', key
 #      console.log 'type', @type
-      console.log name, this
+#      console.log name, this
       if element.initialize
         element.initialize.apply this, args
       this
@@ -83,6 +83,9 @@ initialize = () ->
     Block:
       elements: 'list'
       initialize: initialize_block
+    Case:
+      value: 'object'
+      code: 'code'
     Class_Definition:
       name: 'compress'
       parent: 'string'
@@ -98,12 +101,17 @@ initialize = () ->
       name: 'string'
       condition: 'string'
       block: 'list'
+    Conversion:
+      out_type: 'string'
     Create_Array:
       arguments: 'list'
     Exception_Raise:
       expression: 'object'
     Expression:
-      contents: 'object'
+      contents: 'object',
+      negate: 'bool'
+      modifiers: 'list'
+      
     Expression_List:
       expressions: 'list'
     Foreach_Object:
@@ -147,6 +155,10 @@ initialize = () ->
     Property:
       variable: 'string'
       value: 'string'
+    Switch_Statement:
+      variable: 'object'
+      cases: 'list'
+      default_case: 'object'
     Terminator:
       dummy: 'string'
     Variable:
@@ -162,3 +174,11 @@ initialize()
 
 Parser = 
   label: ''
+  
+create_expression = (contents, negate)->
+  if contents.type == 'expression'
+    contents.negate = negate if negate != undefined
+    return contents
+  else
+    negate = negate || false
+    return new Expression(contents, negate)

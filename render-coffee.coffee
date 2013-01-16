@@ -16,8 +16,6 @@ MetaHub.node_module module, ->
       result
 
     render: (liquid) ->
-      
-      #      console.log('liquid', liquid , typeof liquid, liquid.length);
       return  if liquid is null or liquid is `undefined`
       args = Array::slice.call(arguments)
       if liquid.type
@@ -30,6 +28,18 @@ MetaHub.node_module module, ->
       else
         liquid
 
+    render_block: (elements)->
+      ++@depth
+      indent = @indent()      
+      rendered_elements = elements.map (element) =>
+        indent + @render(element)
+      --@depth
+      result = "\n" + rendered_elements.join("\n")
+
+      if result[result.length - 1] != "\n"
+        result += "\n"
+      result
+      
     render_elements: (tokens, spacer) ->
       spacer = ' ' if typeof spacer != 'string'
       results = []
@@ -49,11 +59,14 @@ MetaHub.node_module module, ->
       if parameters.length > 0
         text += "(" + parameters + ")"
       text += "->"
-      header = ''
+      header = []
       for parameter in element.parameters.variables
         if parameter.default_value
-#          header += parameter.name + ' = ' + parameter.name + ' || ' + @render(parameter.default_value) + ";\n"
-          header += 'if (' + parameter.name + ' === undefined)\n' + parameter.name + ' = ' + @render(parameter.default_value) + ";\n"
+          default_hack = 'if ' + parameter.name + ' == undefined\n'
+          @depth += 2
+          default_hack += @indent() + parameter.name + ' = ' + @render(parameter.default_value)
+          @depth -= 2
+          header.push default_hack
 
       text += @render(element.block, header)
       text
@@ -71,29 +84,31 @@ MetaHub.node_module module, ->
       assignment: (element)->
         @render(element.variable) + ' = ' + @render(element.expression)
         
-      block: (element, prefix) ->
-        if prefix is undefined
-          prefix = ''  
-        ++@depth
-        result = "\n" + @indent() + prefix
-        result += @render_elements(element.elements, "\n" + @indent()) + "\n"
-        --@depth
-        result
-
+      block: (element, prefix, suffix) ->
+        prefix = prefix || []
+        suffix = suffix || []
+        elements = [].concat prefix, element.elements, suffix
+        @render_block elements
+ 
       class_block: (element) ->
         ++@depth
         elements = element.elements.filter (element) ->
           element.type
+        indent = @indent()
         elements = elements.map (element) =>
-          @render(element).trim()
+          indent + @render(element)
         --@depth
-        elements.join(",\n")        
+        "\n" + elements.join("\n")    
 
       class_definition: (element) ->
         parent = element.parent || 'Meta_Object'
-        element.name + " = " + parent + ".subclass('" +
-        element.name + "', {\n" + @render(element.block) + "});"
+        element.name + " = " + parent + ".subclass '" +
+        element.name + "'," + @render(element.block)
 
+      case_statement: (element)->
+        text += @indent + 'when ' + @render(element.value)
+        text += @render_block(element.code)
+        
       code: (element) ->
         @render_elements element.elements
         
@@ -105,21 +120,23 @@ MetaHub.node_module module, ->
 
       control: (element) ->
         if element.name == 'do'
-          text = 'do' + @render(element.block)
-          text += "while (" + @render(element.condition) + ");\n"
+          condition = "break unless " + @render(element.condition)
+          text = 'loop' + @render(element.block, undefined, condition)
         else
           text = element.name
-          text += " (" + @render(element.condition) + ")"  if element.condition
+          text += " " + @render(element.condition)  if element.condition
           text + @render(element.block)
       
       create_array: (element)->
         '[' + @render(element.arguments) + ']'
         
       exception_raise: (element)->
-        'throw ' + @render(element.expression) + ";\n"
+        'throw ' + @render(element.expression) + "\n"
         
       expression: (element)->
-        @render(element.contents)
+        text = ''
+        text += '!' if element.negate
+        text += @render(element.contents)
 
       expression_list: (element)->
         @render_elements(element.expressions, ' ')
@@ -154,7 +171,7 @@ MetaHub.node_module module, ->
         @render(element.variable) + '(' + @render(element.arguments) + ')'
         
       literal_string: (element) ->
-        if element.quotes = 'heredoc'
+        if element.quotes == 'heredoc'
 #          lines = element.text
 #          '<<<' + element.label + @render(element.text) + element.label
           text = '"""\n'
@@ -176,14 +193,18 @@ MetaHub.node_module module, ->
           name = 'initialize'
         else
           name = element.name
-        name + ": " + @render_function_body element
+        name + ": " + @render_function_body(element)
 #        name + ": function" + "(" + @render(element.parameters) + ")" + @render(element.block)
 
       operator: (element)->
-        if element.symbol == '.'
-          return '+';
-        else
-          element.symbol
+        conversions =
+          '===': '=='
+          '!==': '!='
+        
+        if conversions[element.symbol] != undefined
+          return conversions[element.symbol]
+
+        element.symbol
           
       parameter: (element) ->
         element.name
@@ -197,12 +218,23 @@ MetaHub.node_module module, ->
       property: (element) ->
         value = element.value || "''"
         @render(element.variable) + ': ' + @render(value)
+      
+      switch_statement: (element)->
+        text = 'switch' + @render(element.variable) + "\n"
+        @depth++
+        for c in element.cases
+          text += @render c
+        if element.default_case
+          text += @render element.default_case
+          
+        @depth--
         
       terminator: (element)->
         ''
 
       variable: (element, hide_index) ->
         text = element.name + element.children.replace(/\->/g, ".")
+        text = text.replace /^this\./, '@'
         if !hide_index
           text += @render(element.index)
         text
