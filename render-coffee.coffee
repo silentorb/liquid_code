@@ -6,6 +6,7 @@ MetaHub.node_module module, ->
   
   function_conversions =
     'json_encode': 'JSON.stringify'
+    'json_decode': 'JSON.parse'
     'print_r': 'console.log'
     'unset': 'delete $1'
     'array_unshift': '$1.unshift($2)'
@@ -13,6 +14,7 @@ MetaHub.node_module module, ->
     'array_merge': 'MetaHub.extend'
     'get_object_vars': '$1'
     'preg_match': '$2.match($1)'
+    'isset': "typeof $1 != 'undefined'"
 
   CoffeeScript = Ice.subclass("CoffeeScript",
     depth: 0
@@ -94,7 +96,11 @@ MetaHub.node_module module, ->
         
       assignment: (element)->
         @render(element.variable) + ' = ' + @render(element.expression)
-        
+      
+      associative_array_definition: (element)->
+        return "[]" if element.items.length == 0
+        @render_block element.items
+
       block: (element, prefix, suffix) ->
         prefix = prefix || []
         suffix = suffix || []
@@ -110,7 +116,7 @@ MetaHub.node_module module, ->
         element.name + "'," + @render(element.block)
         
       code: (element) ->
-        @render_elements element.elements
+        @render_elements element.elements, ''
       
       command: (element)->
         text = element.name
@@ -172,6 +178,8 @@ MetaHub.node_module module, ->
         if element.name == 'stdClass'
           "{}"
 #          "new" +  + "(" + @render(element.arguments) + ")"
+        else if element.name == 'Exception'
+          "new" + 'Error' + "(" + @render(element.arguments) + ")"
         else
           element.name + ".create(" + @render(element.arguments) + ")"
  
@@ -194,7 +202,12 @@ MetaHub.node_module module, ->
               @render element.arguments.expressions[index - 1]
           name = conversion
           
-        text += name + "(" + args + ")"
+        text += name
+        text = text.replace /^this\./, '@'
+        if args.match /\n/ # Don't use parenthesis when the block covers multiple lines
+          text += " " + args
+        else
+          text += "(" + args + ")"
 
 #            element.arguments.expressions[
 
@@ -212,6 +225,9 @@ MetaHub.node_module module, ->
       invoke_variable_function: (element)->
         @render(element.variable) + '(' + @render(element.arguments) + ')'
         
+      key_value: (element)->
+        @render(element.key) + ': ' + @render(element.value)
+
       literal_string: (element) ->
         if element.quotes == 'heredoc'
 #          lines = element.text
@@ -302,7 +318,13 @@ MetaHub.node_module module, ->
 #        text = [element.name].concat(element.children).join('.')
         text += element.name
         text = text.replace /^this\./, '@'
-        if !hide_index && element.index
-          text += "[" + @render(element.index) + "]"
+        if !hide_index
+          if element.object_index
+            text += "[" + @render(element.object_index) + "]"
+          if element.index
+            text += "[" + @render(element.index) + "]"          
+        
+        if element.append
+          text += '.push(' + @render(element.append) + ')'
         text
   )

@@ -77,7 +77,9 @@ initialize = () ->
       expression: 'object'
     Assignment:
       variable: 'object'
-      expression: 'object'      
+      expression: 'object'
+    Associative_Array_Definition:
+      items: 'list'
     Block:
       elements: 'list'
       initialize: initialize_block
@@ -137,6 +139,9 @@ initialize = () ->
     Invoke_Variable_Function:
       variable: 'object'
       arguments: 'list'
+    Key_Value:
+      key: 'string'
+      value: 'object'
     Literal_String:
       text: 'string'
       quotes: 'string'

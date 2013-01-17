@@ -1,44 +1,3828 @@
 {
   "type": "code",
   "elements": [
-    [
-      {
-        "type": "expression",
-        "contents": {
-          "type": "invoke_function",
-          "name": "preg_match",
-          "arguments": {
-            "type": "arguments",
-            "expressions": [
+    {
+      "type": "class_definition",
+      "name": "Table",
+      "parent": "",
+      "block": {
+        "type": "class_block",
+        "elements": [
+          {
+            "type": "property",
+            "variable": {
+              "type": "variable",
+              "name": "name",
+              "children": "",
+              "index": ""
+            }
+          },
+          {
+            "type": "property",
+            "variable": {
+              "type": "variable",
+              "name": "fields",
+              "children": "",
+              "index": ""
+            }
+          },
+          {
+            "type": "property",
+            "variable": {
+              "type": "variable",
+              "name": "ground",
+              "children": "",
+              "index": ""
+            }
+          },
+          {
+            "type": "property",
+            "variable": {
+              "type": "variable",
+              "name": "types",
+              "children": "",
+              "index": ""
+            },
+            "value": [
               {
                 "type": "expression",
                 "contents": {
-                  "type": "regex",
-                  "text": "^[A-Z_0-9]+\\s*(?:\\(\\d+\\))?[\\w\\s]*$"
+                  "type": "associative_array_definition",
+                  "items": [
+                    {
+                      "type": "key_value",
+                      "key": {
+                        "type": "expression",
+                        "contents": {
+                          "type": "literal_string",
+                          "text": "INT",
+                          "quotes": "single"
+                        }
+                      },
+                      "value": {
+                        "type": "expression",
+                        "contents": {
+                          "type": "literal_string",
+                          "text": "int",
+                          "quotes": "single"
+                        }
+                      }
+                    },
+                    {
+                      "type": "key_value",
+                      "key": {
+                        "type": "expression",
+                        "contents": {
+                          "type": "literal_string",
+                          "text": "TINYINT",
+                          "quotes": "single"
+                        }
+                      },
+                      "value": {
+                        "type": "expression",
+                        "contents": {
+                          "type": "literal_string",
+                          "text": "bool",
+                          "quotes": "single"
+                        }
+                      }
+                    },
+                    {
+                      "type": "key_value",
+                      "key": {
+                        "type": "expression",
+                        "contents": {
+                          "type": "literal_string",
+                          "text": "SMALLINT",
+                          "quotes": "single"
+                        }
+                      },
+                      "value": {
+                        "type": "expression",
+                        "contents": {
+                          "type": "literal_string",
+                          "text": "int",
+                          "quotes": "single"
+                        }
+                      }
+                    },
+                    {
+                      "type": "key_value",
+                      "key": {
+                        "type": "expression",
+                        "contents": {
+                          "type": "literal_string",
+                          "text": "VARCHAR",
+                          "quotes": "single"
+                        }
+                      },
+                      "value": {
+                        "type": "expression",
+                        "contents": {
+                          "type": "literal_string",
+                          "text": "string",
+                          "quotes": "single"
+                        }
+                      }
+                    },
+                    {
+                      "type": "key_value",
+                      "key": {
+                        "type": "expression",
+                        "contents": {
+                          "type": "literal_string",
+                          "text": "TEXT",
+                          "quotes": "single"
+                        }
+                      },
+                      "value": {
+                        "type": "expression",
+                        "contents": {
+                          "type": "literal_string",
+                          "text": "text",
+                          "quotes": "single"
+                        }
+                      }
+                    },
+                    {
+                      "type": "key_value",
+                      "key": {
+                        "type": "expression",
+                        "contents": {
+                          "type": "literal_string",
+                          "text": "LONGTEXT",
+                          "quotes": "single"
+                        }
+                      },
+                      "value": {
+                        "type": "expression",
+                        "contents": {
+                          "type": "literal_string",
+                          "text": "text",
+                          "quotes": "single"
+                        }
+                      }
+                    }
+                  ]
                 }
-              },
-              {
-                "type": "expression",
-                "contents": {
+              }
+            ]
+          },
+          {
+            "type": "method_definition",
+            "name": "__construct",
+            "parameters": {
+              "type": "parameters",
+              "variables": [
+                {
+                  "type": "parameter",
+                  "name": "name",
+                  "default_value": ""
+                },
+                {
+                  "type": "parameter",
+                  "name": "ground",
+                  "default_value": ""
+                }
+              ]
+            },
+            "block": {
+              "type": "block",
+              "elements": [
+                [
+                  {
+                    "type": "expression_list",
+                    "expressions": [
+                      {
+                        "type": "expression",
+                        "contents": {
+                          "type": "variable",
+                          "name": "name",
+                          "children": "",
+                          "index": "",
+                          "root": {
+                            "type": "variable",
+                            "name": "this",
+                            "children": "",
+                            "index": ""
+                          }
+                        }
+                      },
+                      {
+                        "type": "operator",
+                        "symbol": "="
+                      },
+                      {
+                        "type": "expression",
+                        "contents": {
+                          "type": "variable",
+                          "name": "name",
+                          "children": "",
+                          "index": ""
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "terminator"
+                  }
+                ],
+                [
+                  {
+                    "type": "expression_list",
+                    "expressions": [
+                      {
+                        "type": "expression",
+                        "contents": {
+                          "type": "variable",
+                          "name": "ground",
+                          "children": "",
+                          "index": "",
+                          "root": {
+                            "type": "variable",
+                            "name": "this",
+                            "children": "",
+                            "index": ""
+                          }
+                        }
+                      },
+                      {
+                        "type": "operator",
+                        "symbol": "="
+                      },
+                      {
+                        "type": "expression",
+                        "contents": {
+                          "type": "variable",
+                          "name": "ground",
+                          "children": "",
+                          "index": ""
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "terminator"
+                  }
+                ]
+              ],
+              "variables": {
+                "name": {
+                  "type": "variable",
+                  "name": "name",
+                  "children": "",
+                  "index": ""
+                },
+                "ground": {
+                  "type": "variable",
+                  "name": "ground",
+                  "children": "",
+                  "index": ""
+                }
+              }
+            },
+            "constructor": true
+          },
+          {
+            "type": "method_definition",
+            "name": "convert_to_property_type",
+            "parameters": {
+              "type": "parameters",
+              "variables": [
+                {
+                  "type": "parameter",
+                  "name": "field_type",
+                  "default_value": ""
+                }
+              ]
+            },
+            "block": {
+              "type": "block",
+              "elements": [
+                [
+                  {
+                    "type": "expression_list",
+                    "expressions": [
+                      {
+                        "type": "expression",
+                        "contents": {
+                          "type": "variable",
+                          "name": "name",
+                          "children": "",
+                          "index": ""
+                        }
+                      },
+                      {
+                        "type": "operator",
+                        "symbol": "="
+                      },
+                      {
+                        "type": "expression",
+                        "contents": {
+                          "type": "invoke_function",
+                          "name": "preg_replace",
+                          "arguments": {
+                            "type": "arguments",
+                            "expressions": [
+                              {
+                                "type": "expression",
+                                "contents": {
+                                  "type": "regex",
+                                  "text": "\\s*\\(.*\\).*"
+                                }
+                              },
+                              {
+                                "type": "expression",
+                                "contents": {
+                                  "type": "literal_string",
+                                  "text": "",
+                                  "quotes": "single"
+                                }
+                              },
+                              {
+                                "type": "expression",
+                                "contents": {
+                                  "type": "variable",
+                                  "name": "field_type",
+                                  "children": "",
+                                  "index": ""
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "terminator"
+                  }
+                ],
+                [
+                  {
+                    "type": "expression_list",
+                    "expressions": [
+                      {
+                        "type": "expression",
+                        "contents": {
+                          "type": "variable",
+                          "name": "name",
+                          "children": "",
+                          "index": ""
+                        }
+                      },
+                      {
+                        "type": "operator",
+                        "symbol": "="
+                      },
+                      {
+                        "type": "expression",
+                        "contents": {
+                          "type": "invoke_function",
+                          "name": "strtoupper",
+                          "arguments": {
+                            "type": "arguments",
+                            "expressions": [
+                              {
+                                "type": "expression",
+                                "contents": {
+                                  "type": "variable",
+                                  "name": "name",
+                                  "children": "",
+                                  "index": ""
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "terminator"
+                  }
+                ],
+                {
+                  "type": "expression_list",
+                  "expressions": [
+                    "return",
+                    {
+                      "type": "expression",
+                      "contents": {
+                        "type": "invoke_static_member",
+                        "class_name": "Table",
+                        "target": {
+                          "type": "variable",
+                          "name": "types",
+                          "children": "",
+                          "index": {
+                            "type": "expression",
+                            "contents": {
+                              "type": "variable",
+                              "name": "name",
+                              "children": "",
+                              "index": ""
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ],
+              "variables": {
+                "name": {
+                  "type": "variable",
+                  "name": "name",
+                  "children": "",
+                  "index": ""
+                },
+                "field_type": {
                   "type": "variable",
                   "name": "field_type",
+                  "children": "",
+                  "index": ""
+                },
+                "types": {
+                  "type": "variable",
+                  "name": "types",
+                  "children": "",
+                  "index": {
+                    "type": "expression",
+                    "contents": {
+                      "type": "variable",
+                      "name": "name",
+                      "children": "",
+                      "index": ""
+                    }
+                  }
+                }
+              }
+            },
+            "constructor": false
+          },
+          {
+            "type": "method_definition",
+            "name": "create_from_trellis",
+            "parameters": {
+              "type": "parameters",
+              "variables": [
+                {
+                  "type": "parameter",
+                  "name": "trellis",
+                  "default_value": ""
+                },
+                {
+                  "type": "parameter",
+                  "name": "ground",
+                  "default_value": ""
+                }
+              ]
+            },
+            "block": {
+              "type": "block",
+              "elements": [
+                {
+                  "type": "control",
+                  "name": "if",
+                  "condition": [
+                    {
+                      "type": "expression",
+                      "contents": {
+                        "type": "variable",
+                        "name": "ground",
+                        "children": "",
+                        "index": ""
+                      }
+                    }
+                  ],
+                  "block": {
+                    "type": "block",
+                    "elements": [
+                      {
+                        "type": "expression_list",
+                        "expressions": [
+                          {
+                            "type": "expression",
+                            "contents": {
+                              "type": "variable",
+                              "name": "ground",
+                              "children": "",
+                              "index": ""
+                            }
+                          },
+                          {
+                            "type": "operator",
+                            "symbol": "="
+                          },
+                          {
+                            "type": "expression",
+                            "contents": {
+                              "type": "variable",
+                              "name": "ground",
+                              "children": "",
+                              "index": "",
+                              "root": {
+                                "type": "variable",
+                                "name": "trellis",
+                                "children": "",
+                                "index": ""
+                              }
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "type": "terminator"
+                      }
+                    ],
+                    "variables": {
+                      "ground": {
+                        "type": "variable",
+                        "name": "ground",
+                        "children": "",
+                        "index": "",
+                        "root": {
+                          "type": "variable",
+                          "name": "trellis",
+                          "children": "",
+                          "index": ""
+                        }
+                      }
+                    }
+                  }
+                },
+                [
+                  {
+                    "type": "expression_list",
+                    "expressions": [
+                      {
+                        "type": "expression",
+                        "contents": {
+                          "type": "variable",
+                          "name": "table",
+                          "children": "",
+                          "index": ""
+                        }
+                      },
+                      {
+                        "type": "operator",
+                        "symbol": "="
+                      },
+                      {
+                        "type": "expression",
+                        "contents": {
+                          "type": "instantiate_class",
+                          "name": "Table",
+                          "arguments": {
+                            "type": "arguments",
+                            "expressions": [
+                              {
+                                "type": "expression",
+                                "contents": {
+                                  "type": "invoke_function",
+                                  "name": "get_plural",
+                                  "arguments": {
+                                    "type": "arguments",
+                                    "expressions": [
+                                      ""
+                                    ]
+                                  },
+                                  "root": {
+                                    "type": "variable",
+                                    "name": "trellis",
+                                    "children": "",
+                                    "index": ""
+                                  }
+                                }
+                              },
+                              {
+                                "type": "expression",
+                                "contents": {
+                                  "type": "variable",
+                                  "name": "ground",
+                                  "children": "",
+                                  "index": ""
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "terminator"
+                  }
+                ],
+                [
+                  {
+                    "type": "expression_list",
+                    "expressions": [
+                      {
+                        "type": "expression",
+                        "contents": {
+                          "type": "variable",
+                          "name": "trellis",
+                          "children": "",
+                          "index": "",
+                          "root": {
+                            "type": "variable",
+                            "name": "table",
+                            "children": "",
+                            "index": ""
+                          }
+                        }
+                      },
+                      {
+                        "type": "operator",
+                        "symbol": "="
+                      },
+                      {
+                        "type": "expression",
+                        "contents": {
+                          "type": "variable",
+                          "name": "trellis",
+                          "children": "",
+                          "index": ""
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "terminator"
+                  }
+                ],
+                [
+                  {
+                    "type": "expression",
+                    "contents": {
+                      "type": "invoke_function",
+                      "name": "load_from_database",
+                      "arguments": {
+                        "type": "arguments",
+                        "expressions": [
+                          ""
+                        ]
+                      },
+                      "root": {
+                        "type": "variable",
+                        "name": "table",
+                        "children": "",
+                        "index": ""
+                      }
+                    }
+                  },
+                  {
+                    "type": "terminator"
+                  }
+                ],
+                {
+                  "type": "expression_list",
+                  "expressions": [
+                    "return",
+                    {
+                      "type": "expression",
+                      "contents": {
+                        "type": "variable",
+                        "name": "table",
+                        "children": "",
+                        "index": ""
+                      }
+                    }
+                  ]
+                }
+              ],
+              "variables": {
+                "ground": {
+                  "type": "variable",
+                  "name": "ground",
+                  "children": "",
+                  "index": ""
+                },
+                "table": {
+                  "type": "variable",
+                  "name": "table",
+                  "children": "",
+                  "index": ""
+                },
+                "trellis": {
+                  "type": "variable",
+                  "name": "trellis",
+                  "children": "",
+                  "index": ""
+                }
+              }
+            },
+            "constructor": false
+          },
+          {
+            "type": "method_definition",
+            "name": "load_fields",
+            "parameters": {
+              "type": "parameters",
+              "variables": [
+                ""
+              ]
+            },
+            "block": {
+              "type": "block",
+              "elements": [
+                [
+                  {
+                    "type": "expression_list",
+                    "expressions": [
+                      {
+                        "type": "expression",
+                        "contents": {
+                          "type": "variable",
+                          "name": "rows",
+                          "children": "",
+                          "index": ""
+                        }
+                      },
+                      {
+                        "type": "operator",
+                        "symbol": "="
+                      },
+                      {
+                        "type": "expression",
+                        "contents": {
+                          "type": "invoke_function",
+                          "name": "query_objects",
+                          "arguments": {
+                            "type": "arguments",
+                            "expressions": [
+                              {
+                                "type": "expression_list",
+                                "expressions": [
+                                  {
+                                    "type": "expression",
+                                    "contents": {
+                                      "type": "literal_string",
+                                      "text": "SHOW COLUMNS FROM ",
+                                      "quotes": "single"
+                                    }
+                                  },
+                                  {
+                                    "type": "operator",
+                                    "symbol": "+"
+                                  },
+                                  {
+                                    "type": "expression",
+                                    "contents": {
+                                      "type": "variable",
+                                      "name": "name",
+                                      "children": "",
+                                      "index": "",
+                                      "root": {
+                                        "type": "variable",
+                                        "name": "this",
+                                        "children": "",
+                                        "index": ""
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          "root": {
+                            "type": "variable",
+                            "name": "this",
+                            "children": "",
+                            "index": ""
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "terminator"
+                  }
+                ],
+                [
+                  {
+                    "type": "expression_list",
+                    "expressions": [
+                      {
+                        "type": "expression",
+                        "contents": {
+                          "type": "variable",
+                          "name": "result",
+                          "children": "",
+                          "index": ""
+                        }
+                      },
+                      {
+                        "type": "operator",
+                        "symbol": "="
+                      },
+                      {
+                        "type": "expression",
+                        "contents": {
+                          "type": "create_array",
+                          "arguments": {
+                            "type": "arguments",
+                            "expressions": [
+                              ""
+                            ]
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "terminator"
+                  }
+                ],
+                {
+                  "type": "foreach_object",
+                  "object": {
+                    "type": "variable",
+                    "name": "rows",
+                    "children": "",
+                    "index": ""
+                  },
+                  "key": "",
+                  "value": {
+                    "type": "variable",
+                    "name": "row",
+                    "children": "",
+                    "index": ""
+                  },
+                  "block": {
+                    "type": "block",
+                    "elements": [
+                      [
+                        {
+                          "type": "expression_list",
+                          "expressions": [
+                            {
+                              "type": "expression",
+                              "contents": {
+                                "type": "variable",
+                                "name": "field",
+                                "children": "",
+                                "index": ""
+                              }
+                            },
+                            {
+                              "type": "operator",
+                              "symbol": "="
+                            },
+                            {
+                              "type": "expression",
+                              "contents": {
+                                "type": "instantiate_class",
+                                "name": "stdClass",
+                                "arguments": {
+                                  "type": "arguments",
+                                  "expressions": [
+                                    ""
+                                  ]
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "terminator"
+                        }
+                      ],
+                      [
+                        {
+                          "type": "expression_list",
+                          "expressions": [
+                            {
+                              "type": "expression",
+                              "contents": {
+                                "type": "variable",
+                                "name": "name",
+                                "children": "",
+                                "index": "",
+                                "root": {
+                                  "type": "variable",
+                                  "name": "field",
+                                  "children": "",
+                                  "index": ""
+                                }
+                              }
+                            },
+                            {
+                              "type": "operator",
+                              "symbol": "="
+                            },
+                            {
+                              "type": "expression",
+                              "contents": {
+                                "type": "variable",
+                                "name": "Field",
+                                "children": "",
+                                "index": "",
+                                "root": {
+                                  "type": "variable",
+                                  "name": "row",
+                                  "children": "",
+                                  "index": ""
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "terminator"
+                        }
+                      ],
+                      [
+                        {
+                          "type": "expression_list",
+                          "expressions": [
+                            {
+                              "type": "expression",
+                              "contents": {
+                                "type": "variable",
+                                "name": "type",
+                                "children": "",
+                                "index": "",
+                                "root": {
+                                  "type": "variable",
+                                  "name": "field",
+                                  "children": "",
+                                  "index": ""
+                                }
+                              }
+                            },
+                            {
+                              "type": "operator",
+                              "symbol": "="
+                            },
+                            {
+                              "type": "expression",
+                              "contents": {
+                                "type": "variable",
+                                "name": "Type",
+                                "children": "",
+                                "index": "",
+                                "root": {
+                                  "type": "variable",
+                                  "name": "row",
+                                  "children": "",
+                                  "index": ""
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "terminator"
+                        }
+                      ],
+                      [
+                        {
+                          "type": "expression_list",
+                          "expressions": [
+                            {
+                              "type": "expression",
+                              "contents": {
+                                "type": "variable",
+                                "name": "allow_null",
+                                "children": "",
+                                "index": "",
+                                "root": {
+                                  "type": "variable",
+                                  "name": "field",
+                                  "children": "",
+                                  "index": ""
+                                }
+                              }
+                            },
+                            {
+                              "type": "operator",
+                              "symbol": "="
+                            },
+                            {
+                              "type": "expression",
+                              "contents": {
+                                "type": "variable",
+                                "name": "Null",
+                                "children": "",
+                                "index": "",
+                                "root": {
+                                  "type": "variable",
+                                  "name": "row",
+                                  "children": "",
+                                  "index": ""
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "terminator"
+                        }
+                      ],
+                      [
+                        {
+                          "type": "expression_list",
+                          "expressions": [
+                            {
+                              "type": "expression",
+                              "contents": {
+                                "type": "variable",
+                                "name": "default",
+                                "children": "",
+                                "index": "",
+                                "root": {
+                                  "type": "variable",
+                                  "name": "field",
+                                  "children": "",
+                                  "index": ""
+                                }
+                              }
+                            },
+                            {
+                              "type": "operator",
+                              "symbol": "="
+                            },
+                            {
+                              "type": "expression",
+                              "contents": {
+                                "type": "variable",
+                                "name": "Default",
+                                "children": "",
+                                "index": "",
+                                "root": {
+                                  "type": "variable",
+                                  "name": "row",
+                                  "children": "",
+                                  "index": ""
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "terminator"
+                        }
+                      ],
+                      [
+                        {
+                          "type": "expression_list",
+                          "expressions": [
+                            {
+                              "type": "expression",
+                              "contents": {
+                                "type": "variable",
+                                "name": "result",
+                                "children": "",
+                                "index": {
+                                  "type": "expression",
+                                  "contents": {
+                                    "type": "variable",
+                                    "name": "name",
+                                    "children": "",
+                                    "index": "",
+                                    "root": {
+                                      "type": "variable",
+                                      "name": "field",
+                                      "children": "",
+                                      "index": ""
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "type": "operator",
+                              "symbol": "="
+                            },
+                            {
+                              "type": "expression",
+                              "contents": {
+                                "type": "variable",
+                                "name": "field",
+                                "children": "",
+                                "index": ""
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "terminator"
+                        }
+                      ]
+                    ],
+                    "variables": {
+                      "field": {
+                        "type": "variable",
+                        "name": "field",
+                        "children": "",
+                        "index": ""
+                      },
+                      "name": {
+                        "type": "variable",
+                        "name": "name",
+                        "children": "",
+                        "index": "",
+                        "root": {
+                          "type": "variable",
+                          "name": "field",
+                          "children": "",
+                          "index": ""
+                        }
+                      },
+                      "Field": {
+                        "type": "variable",
+                        "name": "Field",
+                        "children": "",
+                        "index": "",
+                        "root": {
+                          "type": "variable",
+                          "name": "row",
+                          "children": "",
+                          "index": ""
+                        }
+                      },
+                      "type": {
+                        "type": "variable",
+                        "name": "type",
+                        "children": "",
+                        "index": "",
+                        "root": {
+                          "type": "variable",
+                          "name": "field",
+                          "children": "",
+                          "index": ""
+                        }
+                      },
+                      "Type": {
+                        "type": "variable",
+                        "name": "Type",
+                        "children": "",
+                        "index": "",
+                        "root": {
+                          "type": "variable",
+                          "name": "row",
+                          "children": "",
+                          "index": ""
+                        }
+                      },
+                      "allow_null": {
+                        "type": "variable",
+                        "name": "allow_null",
+                        "children": "",
+                        "index": "",
+                        "root": {
+                          "type": "variable",
+                          "name": "field",
+                          "children": "",
+                          "index": ""
+                        }
+                      },
+                      "Null": {
+                        "type": "variable",
+                        "name": "Null",
+                        "children": "",
+                        "index": "",
+                        "root": {
+                          "type": "variable",
+                          "name": "row",
+                          "children": "",
+                          "index": ""
+                        }
+                      },
+                      "default": {
+                        "type": "variable",
+                        "name": "default",
+                        "children": "",
+                        "index": "",
+                        "root": {
+                          "type": "variable",
+                          "name": "field",
+                          "children": "",
+                          "index": ""
+                        }
+                      },
+                      "Default": {
+                        "type": "variable",
+                        "name": "Default",
+                        "children": "",
+                        "index": "",
+                        "root": {
+                          "type": "variable",
+                          "name": "row",
+                          "children": "",
+                          "index": ""
+                        }
+                      },
+                      "result": {
+                        "type": "variable",
+                        "name": "result",
+                        "children": "",
+                        "index": {
+                          "type": "expression",
+                          "contents": {
+                            "type": "variable",
+                            "name": "name",
+                            "children": "",
+                            "index": "",
+                            "root": {
+                              "type": "variable",
+                              "name": "field",
+                              "children": "",
+                              "index": ""
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "expression_list",
+                  "expressions": [
+                    "return",
+                    {
+                      "type": "expression",
+                      "contents": {
+                        "type": "variable",
+                        "name": "result",
+                        "children": "",
+                        "index": ""
+                      }
+                    }
+                  ]
+                }
+              ],
+              "variables": {
+                "rows": {
+                  "type": "variable",
+                  "name": "rows",
+                  "children": "",
+                  "index": ""
+                },
+                "name": {
+                  "type": "variable",
+                  "name": "name",
                   "children": "",
                   "index": "",
                   "root": {
                     "type": "variable",
-                    "name": "type",
+                    "name": "field",
+                    "children": "",
+                    "index": ""
+                  }
+                },
+                "this": {
+                  "type": "variable",
+                  "name": "this",
+                  "children": "",
+                  "index": ""
+                },
+                "result": {
+                  "type": "variable",
+                  "name": "result",
+                  "children": "",
+                  "index": ""
+                },
+                "row": {
+                  "type": "variable",
+                  "name": "row",
+                  "children": "",
+                  "index": ""
+                },
+                "field": {
+                  "type": "variable",
+                  "name": "field",
+                  "children": "",
+                  "index": ""
+                },
+                "Field": {
+                  "type": "variable",
+                  "name": "Field",
+                  "children": "",
+                  "index": "",
+                  "root": {
+                    "type": "variable",
+                    "name": "row",
+                    "children": "",
+                    "index": ""
+                  }
+                },
+                "type": {
+                  "type": "variable",
+                  "name": "type",
+                  "children": "",
+                  "index": "",
+                  "root": {
+                    "type": "variable",
+                    "name": "field",
+                    "children": "",
+                    "index": ""
+                  }
+                },
+                "Type": {
+                  "type": "variable",
+                  "name": "Type",
+                  "children": "",
+                  "index": "",
+                  "root": {
+                    "type": "variable",
+                    "name": "row",
+                    "children": "",
+                    "index": ""
+                  }
+                },
+                "allow_null": {
+                  "type": "variable",
+                  "name": "allow_null",
+                  "children": "",
+                  "index": "",
+                  "root": {
+                    "type": "variable",
+                    "name": "field",
+                    "children": "",
+                    "index": ""
+                  }
+                },
+                "Null": {
+                  "type": "variable",
+                  "name": "Null",
+                  "children": "",
+                  "index": "",
+                  "root": {
+                    "type": "variable",
+                    "name": "row",
+                    "children": "",
+                    "index": ""
+                  }
+                },
+                "default": {
+                  "type": "variable",
+                  "name": "default",
+                  "children": "",
+                  "index": "",
+                  "root": {
+                    "type": "variable",
+                    "name": "field",
+                    "children": "",
+                    "index": ""
+                  }
+                },
+                "Default": {
+                  "type": "variable",
+                  "name": "Default",
+                  "children": "",
+                  "index": "",
+                  "root": {
+                    "type": "variable",
+                    "name": "row",
                     "children": "",
                     "index": ""
                   }
                 }
               }
-            ]
+            },
+            "constructor": false
+          },
+          {
+            "type": "method_definition",
+            "name": "load_from_database",
+            "parameters": {
+              "type": "parameters",
+              "variables": [
+                ""
+              ]
+            },
+            "block": {
+              "type": "block",
+              "elements": [
+                [
+                  {
+                    "type": "expression_list",
+                    "expressions": [
+                      {
+                        "type": "expression",
+                        "contents": {
+                          "type": "variable",
+                          "name": "fields",
+                          "children": "",
+                          "index": "",
+                          "root": {
+                            "type": "variable",
+                            "name": "this",
+                            "children": "",
+                            "index": ""
+                          }
+                        }
+                      },
+                      {
+                        "type": "operator",
+                        "symbol": "="
+                      },
+                      {
+                        "type": "expression",
+                        "contents": {
+                          "type": "invoke_function",
+                          "name": "load_fields",
+                          "arguments": {
+                            "type": "arguments",
+                            "expressions": [
+                              ""
+                            ]
+                          },
+                          "root": {
+                            "type": "variable",
+                            "name": "this",
+                            "children": "",
+                            "index": ""
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "terminator"
+                  }
+                ],
+                [
+                  {
+                    "type": "expression_list",
+                    "expressions": [
+                      {
+                        "type": "expression",
+                        "contents": {
+                          "type": "variable",
+                          "name": "indexes",
+                          "children": "",
+                          "index": "",
+                          "root": {
+                            "type": "variable",
+                            "name": "this",
+                            "children": "",
+                            "index": ""
+                          }
+                        }
+                      },
+                      {
+                        "type": "operator",
+                        "symbol": "="
+                      },
+                      {
+                        "type": "expression",
+                        "contents": {
+                          "type": "invoke_function",
+                          "name": "load_indexes",
+                          "arguments": {
+                            "type": "arguments",
+                            "expressions": [
+                              ""
+                            ]
+                          },
+                          "root": {
+                            "type": "variable",
+                            "name": "this",
+                            "children": "",
+                            "index": ""
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "terminator"
+                  }
+                ]
+              ],
+              "variables": {
+                "fields": {
+                  "type": "variable",
+                  "name": "fields",
+                  "children": "",
+                  "index": "",
+                  "root": {
+                    "type": "variable",
+                    "name": "this",
+                    "children": "",
+                    "index": ""
+                  }
+                },
+                "this": {
+                  "type": "variable",
+                  "name": "this",
+                  "children": "",
+                  "index": ""
+                },
+                "indexes": {
+                  "type": "variable",
+                  "name": "indexes",
+                  "children": "",
+                  "index": "",
+                  "root": {
+                    "type": "variable",
+                    "name": "this",
+                    "children": "",
+                    "index": ""
+                  }
+                }
+              }
+            },
+            "constructor": false
+          },
+          {
+            "type": "method_definition",
+            "name": "load_from_schema",
+            "parameters": {
+              "type": "parameters",
+              "variables": [
+                {
+                  "type": "parameter",
+                  "name": "source",
+                  "default_value": ""
+                }
+              ]
+            },
+            "block": {
+              "type": "block",
+              "elements": [
+                {
+                  "type": "control",
+                  "name": "if",
+                  "condition": [
+                    {
+                      "type": "expression",
+                      "contents": {
+                        "type": "invoke_function",
+                        "name": "isset",
+                        "arguments": {
+                          "type": "arguments",
+                          "expressions": [
+                            {
+                              "type": "expression",
+                              "contents": {
+                                "type": "variable",
+                                "name": "trellises",
+                                "children": "",
+                                "index": {
+                                  "type": "expression",
+                                  "contents": {
+                                    "type": "variable",
+                                    "name": "name",
+                                    "children": "",
+                                    "index": "",
+                                    "root": {
+                                      "type": "variable",
+                                      "name": "this",
+                                      "children": "",
+                                      "index": ""
+                                    }
+                                  }
+                                },
+                                "root": {
+                                  "type": "variable",
+                                  "name": "this",
+                                  "children": "",
+                                  "index": ""
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ],
+                  "block": {
+                    "type": "block",
+                    "elements": [
+                      {
+                        "type": "comment",
+                        "text": " Create bi-connection.  For now I don't know of any case where",
+                        "multiline": 0
+                      },
+                      {
+                        "type": "comment",
+                        "text": " tables and trellises would be dynamically modified, so I'm not ",
+                        "multiline": 0
+                      },
+                      {
+                        "type": "comment",
+                        "text": " using MetaHub connections for this.",
+                        "multiline": 0
+                      },
+                      [
+                        {
+                          "type": "expression_list",
+                          "expressions": [
+                            {
+                              "type": "expression",
+                              "contents": {
+                                "type": "variable",
+                                "name": "trellis",
+                                "children": "",
+                                "index": "",
+                                "root": {
+                                  "type": "variable",
+                                  "name": "this",
+                                  "children": "",
+                                  "index": ""
+                                }
+                              }
+                            },
+                            {
+                              "type": "operator",
+                              "symbol": "="
+                            },
+                            {
+                              "type": "expression",
+                              "contents": {
+                                "type": "variable",
+                                "name": "trellises",
+                                "children": "",
+                                "index": {
+                                  "type": "expression",
+                                  "contents": {
+                                    "type": "variable",
+                                    "name": "name",
+                                    "children": "",
+                                    "index": "",
+                                    "root": {
+                                      "type": "variable",
+                                      "name": "this",
+                                      "children": "",
+                                      "index": ""
+                                    }
+                                  }
+                                },
+                                "root": {
+                                  "type": "variable",
+                                  "name": "this",
+                                  "children": "",
+                                  "index": ""
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "terminator"
+                        }
+                      ],
+                      [
+                        {
+                          "type": "expression_list",
+                          "expressions": [
+                            {
+                              "type": "expression",
+                              "contents": {
+                                "type": "variable",
+                                "name": "table",
+                                "children": "",
+                                "index": "",
+                                "root": {
+                                  "type": "variable",
+                                  "name": "this",
+                                  "children": "",
+                                  "index": ""
+                                }
+                              }
+                            },
+                            {
+                              "type": "operator",
+                              "symbol": "="
+                            },
+                            {
+                              "type": "expression",
+                              "contents": {
+                                "type": "variable",
+                                "name": "this",
+                                "children": "",
+                                "index": ""
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "terminator"
+                        }
+                      ],
+                      [
+                        {
+                          "type": "expression_list",
+                          "expressions": [
+                            {
+                              "type": "expression",
+                              "contents": {
+                                "type": "variable",
+                                "name": "name",
+                                "children": "",
+                                "index": "",
+                                "root": {
+                                  "type": "variable",
+                                  "name": "this",
+                                  "children": "",
+                                  "index": ""
+                                }
+                              }
+                            },
+                            {
+                              "type": "operator",
+                              "symbol": "="
+                            },
+                            {
+                              "type": "expression",
+                              "contents": {
+                                "type": "invoke_function",
+                                "name": "get_plural",
+                                "arguments": {
+                                  "type": "arguments",
+                                  "expressions": [
+                                    ""
+                                  ]
+                                },
+                                "root": {
+                                  "type": "variable",
+                                  "name": "this",
+                                  "children": "",
+                                  "index": ""
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "terminator"
+                        }
+                      ]
+                    ],
+                    "variables": {
+                      "trellis": {
+                        "type": "variable",
+                        "name": "trellis",
+                        "children": "",
+                        "index": "",
+                        "root": {
+                          "type": "variable",
+                          "name": "this",
+                          "children": "",
+                          "index": ""
+                        }
+                      },
+                      "trellises": {
+                        "type": "variable",
+                        "name": "trellises",
+                        "children": "",
+                        "index": {
+                          "type": "expression",
+                          "contents": {
+                            "type": "variable",
+                            "name": "name",
+                            "children": "",
+                            "index": "",
+                            "root": {
+                              "type": "variable",
+                              "name": "this",
+                              "children": "",
+                              "index": ""
+                            }
+                          }
+                        },
+                        "root": {
+                          "type": "variable",
+                          "name": "this",
+                          "children": "",
+                          "index": ""
+                        }
+                      },
+                      "table": {
+                        "type": "variable",
+                        "name": "table",
+                        "children": "",
+                        "index": "",
+                        "root": {
+                          "type": "variable",
+                          "name": "this",
+                          "children": "",
+                          "index": ""
+                        }
+                      },
+                      "this": {
+                        "type": "variable",
+                        "name": "this",
+                        "children": "",
+                        "index": ""
+                      },
+                      "name": {
+                        "type": "variable",
+                        "name": "name",
+                        "children": "",
+                        "index": "",
+                        "root": {
+                          "type": "variable",
+                          "name": "this",
+                          "children": "",
+                          "index": ""
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "control",
+                  "name": "if",
+                  "condition": [
+                    {
+                      "type": "expression",
+                      "contents": {
+                        "type": "invoke_function",
+                        "name": "isset",
+                        "arguments": {
+                          "type": "arguments",
+                          "expressions": [
+                            {
+                              "type": "expression",
+                              "contents": {
+                                "type": "variable",
+                                "name": "table_name",
+                                "children": "",
+                                "index": "",
+                                "root": {
+                                  "type": "variable",
+                                  "name": "source",
+                                  "children": "",
+                                  "index": ""
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ],
+                  "block": {
+                    "type": "block",
+                    "elements": [
+                      [
+                        {
+                          "type": "expression_list",
+                          "expressions": [
+                            {
+                              "type": "expression",
+                              "contents": {
+                                "type": "variable",
+                                "name": "name",
+                                "children": "",
+                                "index": "",
+                                "root": {
+                                  "type": "variable",
+                                  "name": "this",
+                                  "children": "",
+                                  "index": ""
+                                }
+                              }
+                            },
+                            {
+                              "type": "operator",
+                              "symbol": "="
+                            },
+                            {
+                              "type": "expression",
+                              "contents": {
+                                "type": "variable",
+                                "name": "table_name",
+                                "children": "",
+                                "index": "",
+                                "root": {
+                                  "type": "variable",
+                                  "name": "source",
+                                  "children": "",
+                                  "index": ""
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "terminator"
+                        }
+                      ]
+                    ],
+                    "variables": {
+                      "name": {
+                        "type": "variable",
+                        "name": "name",
+                        "children": "",
+                        "index": "",
+                        "root": {
+                          "type": "variable",
+                          "name": "this",
+                          "children": "",
+                          "index": ""
+                        }
+                      },
+                      "table_name": {
+                        "type": "variable",
+                        "name": "table_name",
+                        "children": "",
+                        "index": "",
+                        "root": {
+                          "type": "variable",
+                          "name": "source",
+                          "children": "",
+                          "index": ""
+                        }
+                      }
+                    }
+                  }
+                }
+              ],
+              "variables": {
+                "trellises": {
+                  "type": "variable",
+                  "name": "trellises",
+                  "children": "",
+                  "index": {
+                    "type": "expression",
+                    "contents": {
+                      "type": "variable",
+                      "name": "name",
+                      "children": "",
+                      "index": "",
+                      "root": {
+                        "type": "variable",
+                        "name": "this",
+                        "children": "",
+                        "index": ""
+                      }
+                    }
+                  },
+                  "root": {
+                    "type": "variable",
+                    "name": "this",
+                    "children": "",
+                    "index": ""
+                  }
+                },
+                "trellis": {
+                  "type": "variable",
+                  "name": "trellis",
+                  "children": "",
+                  "index": "",
+                  "root": {
+                    "type": "variable",
+                    "name": "this",
+                    "children": "",
+                    "index": ""
+                  }
+                },
+                "table": {
+                  "type": "variable",
+                  "name": "table",
+                  "children": "",
+                  "index": "",
+                  "root": {
+                    "type": "variable",
+                    "name": "this",
+                    "children": "",
+                    "index": ""
+                  }
+                },
+                "this": {
+                  "type": "variable",
+                  "name": "this",
+                  "children": "",
+                  "index": ""
+                },
+                "name": {
+                  "type": "variable",
+                  "name": "name",
+                  "children": "",
+                  "index": "",
+                  "root": {
+                    "type": "variable",
+                    "name": "this",
+                    "children": "",
+                    "index": ""
+                  }
+                },
+                "table_name": {
+                  "type": "variable",
+                  "name": "table_name",
+                  "children": "",
+                  "index": "",
+                  "root": {
+                    "type": "variable",
+                    "name": "source",
+                    "children": "",
+                    "index": ""
+                  }
+                }
+              }
+            },
+            "constructor": false
+          },
+          {
+            "type": "method_definition",
+            "name": "load_indexes",
+            "parameters": {
+              "type": "parameters",
+              "variables": [
+                ""
+              ]
+            },
+            "block": {
+              "type": "block",
+              "elements": [
+                [
+                  {
+                    "type": "expression_list",
+                    "expressions": [
+                      {
+                        "type": "expression",
+                        "contents": {
+                          "type": "variable",
+                          "name": "rows",
+                          "children": "",
+                          "index": ""
+                        }
+                      },
+                      {
+                        "type": "operator",
+                        "symbol": "="
+                      },
+                      {
+                        "type": "expression",
+                        "contents": {
+                          "type": "invoke_function",
+                          "name": "query_objects",
+                          "arguments": {
+                            "type": "arguments",
+                            "expressions": [
+                              {
+                                "type": "expression_list",
+                                "expressions": [
+                                  {
+                                    "type": "expression",
+                                    "contents": {
+                                      "type": "literal_string",
+                                      "text": "SHOW INDEX FROM ",
+                                      "quotes": "single"
+                                    }
+                                  },
+                                  {
+                                    "type": "operator",
+                                    "symbol": "+"
+                                  },
+                                  {
+                                    "type": "expression",
+                                    "contents": {
+                                      "type": "variable",
+                                      "name": "name",
+                                      "children": "",
+                                      "index": "",
+                                      "root": {
+                                        "type": "variable",
+                                        "name": "this",
+                                        "children": "",
+                                        "index": ""
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          "root": {
+                            "type": "variable",
+                            "name": "this",
+                            "children": "",
+                            "index": ""
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "terminator"
+                  }
+                ],
+                [
+                  {
+                    "type": "expression_list",
+                    "expressions": [
+                      {
+                        "type": "expression",
+                        "contents": {
+                          "type": "variable",
+                          "name": "result",
+                          "children": "",
+                          "index": ""
+                        }
+                      },
+                      {
+                        "type": "operator",
+                        "symbol": "="
+                      },
+                      {
+                        "type": "expression",
+                        "contents": {
+                          "type": "create_array",
+                          "arguments": {
+                            "type": "arguments",
+                            "expressions": [
+                              ""
+                            ]
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "terminator"
+                  }
+                ],
+                {
+                  "type": "foreach_object",
+                  "object": {
+                    "type": "variable",
+                    "name": "rows",
+                    "children": "",
+                    "index": ""
+                  },
+                  "key": "",
+                  "value": {
+                    "type": "variable",
+                    "name": "row",
+                    "children": "",
+                    "index": ""
+                  },
+                  "block": {
+                    "type": "block",
+                    "elements": [
+                      [
+                        {
+                          "type": "expression_list",
+                          "expressions": [
+                            {
+                              "type": "expression",
+                              "contents": {
+                                "type": "variable",
+                                "name": "name",
+                                "children": "",
+                                "index": ""
+                              }
+                            },
+                            {
+                              "type": "operator",
+                              "symbol": "="
+                            },
+                            {
+                              "type": "expression",
+                              "contents": {
+                                "type": "variable",
+                                "name": "Key_name",
+                                "children": "",
+                                "index": "",
+                                "root": {
+                                  "type": "variable",
+                                  "name": "index",
+                                  "children": "",
+                                  "index": ""
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "terminator"
+                        }
+                      ],
+                      {
+                        "type": "comment",
+                        "text": " Multiple rows from this query can be part of the same query, so combine them if they are.",
+                        "multiline": 0
+                      },
+                      {
+                        "type": "control",
+                        "name": "if",
+                        "condition": [
+                          {
+                            "type": "expression",
+                            "contents": {
+                              "type": "invoke_function",
+                              "name": "isset",
+                              "arguments": {
+                                "type": "arguments",
+                                "expressions": [
+                                  {
+                                    "type": "expression",
+                                    "contents": {
+                                      "type": "variable",
+                                      "name": "result",
+                                      "children": "",
+                                      "index": {
+                                        "type": "expression",
+                                        "contents": {
+                                          "type": "variable",
+                                          "name": "name",
+                                          "children": "",
+                                          "index": ""
+                                        }
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          }
+                        ],
+                        "block": {
+                          "type": "block",
+                          "elements": [
+                            [
+                              {
+                                "type": "expression_list",
+                                "expressions": [
+                                  {
+                                    "type": "expression",
+                                    "contents": {
+                                      "type": "variable",
+                                      "name": "index",
+                                      "children": "",
+                                      "index": ""
+                                    }
+                                  },
+                                  {
+                                    "type": "operator",
+                                    "symbol": "="
+                                  },
+                                  {
+                                    "type": "expression",
+                                    "contents": {
+                                      "type": "instantiate_class",
+                                      "name": "stdClass",
+                                      "arguments": {
+                                        "type": "arguments",
+                                        "expressions": [
+                                          ""
+                                        ]
+                                      }
+                                    }
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "terminator"
+                              }
+                            ],
+                            [
+                              {
+                                "type": "expression_list",
+                                "expressions": [
+                                  {
+                                    "type": "expression",
+                                    "contents": {
+                                      "type": "variable",
+                                      "name": "result",
+                                      "children": "",
+                                      "index": {
+                                        "type": "expression",
+                                        "contents": {
+                                          "type": "variable",
+                                          "name": "name",
+                                          "children": "",
+                                          "index": ""
+                                        }
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "type": "operator",
+                                    "symbol": "="
+                                  },
+                                  {
+                                    "type": "expression",
+                                    "contents": {
+                                      "type": "variable",
+                                      "name": "index",
+                                      "children": "",
+                                      "index": ""
+                                    }
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "terminator"
+                              }
+                            ],
+                            [
+                              {
+                                "type": "expression_list",
+                                "expressions": [
+                                  {
+                                    "type": "expression",
+                                    "contents": {
+                                      "type": "variable",
+                                      "name": "name",
+                                      "children": "",
+                                      "index": "",
+                                      "root": {
+                                        "type": "variable",
+                                        "name": "index",
+                                        "children": "",
+                                        "index": ""
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "type": "operator",
+                                    "symbol": "="
+                                  },
+                                  {
+                                    "type": "expression",
+                                    "contents": {
+                                      "type": "variable",
+                                      "name": "name",
+                                      "children": "",
+                                      "index": ""
+                                    }
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "terminator"
+                              }
+                            ],
+                            [
+                              {
+                                "type": "expression_list",
+                                "expressions": [
+                                  {
+                                    "type": "expression",
+                                    "contents": {
+                                      "type": "variable",
+                                      "name": "fields",
+                                      "children": "",
+                                      "index": "",
+                                      "root": {
+                                        "type": "variable",
+                                        "name": "index",
+                                        "children": "",
+                                        "index": ""
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "type": "operator",
+                                    "symbol": "="
+                                  },
+                                  {
+                                    "type": "expression",
+                                    "contents": {
+                                      "type": "create_array",
+                                      "arguments": {
+                                        "type": "arguments",
+                                        "expressions": [
+                                          ""
+                                        ]
+                                      }
+                                    }
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "terminator"
+                              }
+                            ],
+                            [
+                              {
+                                "type": "expression_list",
+                                "expressions": [
+                                  {
+                                    "type": "expression",
+                                    "contents": {
+                                      "type": "variable",
+                                      "name": "unique",
+                                      "children": "",
+                                      "index": "",
+                                      "root": {
+                                        "type": "variable",
+                                        "name": "index",
+                                        "children": "",
+                                        "index": ""
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "type": "operator",
+                                    "symbol": "="
+                                  },
+                                  {
+                                    "type": "expression",
+                                    "contents": {
+                                      "type": "variable",
+                                      "name": "Non_unique",
+                                      "children": "",
+                                      "index": "",
+                                      "root": {
+                                        "type": "variable",
+                                        "name": "row",
+                                        "children": "",
+                                        "index": ""
+                                      }
+                                    }
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "terminator"
+                              }
+                            ],
+                            [
+                              {
+                                "type": "expression_list",
+                                "expressions": [
+                                  {
+                                    "type": "expression",
+                                    "contents": {
+                                      "type": "variable",
+                                      "name": "comment",
+                                      "children": "",
+                                      "index": "",
+                                      "root": {
+                                        "type": "variable",
+                                        "name": "index",
+                                        "children": "",
+                                        "index": ""
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "type": "operator",
+                                    "symbol": "="
+                                  },
+                                  {
+                                    "type": "expression",
+                                    "contents": {
+                                      "type": "variable",
+                                      "name": "Comment",
+                                      "children": "",
+                                      "index": "",
+                                      "root": {
+                                        "type": "variable",
+                                        "name": "row",
+                                        "children": "",
+                                        "index": ""
+                                      }
+                                    }
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "terminator"
+                              }
+                            ],
+                            [
+                              {
+                                "type": "expression_list",
+                                "expressions": [
+                                  {
+                                    "type": "expression",
+                                    "contents": {
+                                      "type": "variable",
+                                      "name": "index_comment",
+                                      "children": "",
+                                      "index": "",
+                                      "root": {
+                                        "type": "variable",
+                                        "name": "index",
+                                        "children": "",
+                                        "index": ""
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "type": "operator",
+                                    "symbol": "="
+                                  },
+                                  {
+                                    "type": "expression",
+                                    "contents": {
+                                      "type": "variable",
+                                      "name": "Index_comment",
+                                      "children": "",
+                                      "index": "",
+                                      "root": {
+                                        "type": "variable",
+                                        "name": "row",
+                                        "children": "",
+                                        "index": ""
+                                      }
+                                    }
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "terminator"
+                              }
+                            ],
+                            [
+                              {
+                                "type": "expression_list",
+                                "expressions": [
+                                  {
+                                    "type": "expression",
+                                    "contents": {
+                                      "type": "variable",
+                                      "name": "collation",
+                                      "children": "",
+                                      "index": "",
+                                      "root": {
+                                        "type": "variable",
+                                        "name": "index",
+                                        "children": "",
+                                        "index": ""
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "type": "operator",
+                                    "symbol": "="
+                                  },
+                                  {
+                                    "type": "expression",
+                                    "contents": {
+                                      "type": "variable",
+                                      "name": "Collation",
+                                      "children": "",
+                                      "index": "",
+                                      "root": {
+                                        "type": "variable",
+                                        "name": "row",
+                                        "children": "",
+                                        "index": ""
+                                      }
+                                    }
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "terminator"
+                              }
+                            ],
+                            [
+                              {
+                                "type": "expression_list",
+                                "expressions": [
+                                  {
+                                    "type": "expression",
+                                    "contents": {
+                                      "type": "variable",
+                                      "name": "cardinality",
+                                      "children": "",
+                                      "index": "",
+                                      "root": {
+                                        "type": "variable",
+                                        "name": "index",
+                                        "children": "",
+                                        "index": ""
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "type": "operator",
+                                    "symbol": "="
+                                  },
+                                  {
+                                    "type": "expression",
+                                    "contents": {
+                                      "type": "variable",
+                                      "name": "Cardinality",
+                                      "children": "",
+                                      "index": "",
+                                      "root": {
+                                        "type": "variable",
+                                        "name": "row",
+                                        "children": "",
+                                        "index": ""
+                                      }
+                                    }
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "terminator"
+                              }
+                            ],
+                            [
+                              {
+                                "type": "expression_list",
+                                "expressions": [
+                                  {
+                                    "type": "expression",
+                                    "contents": {
+                                      "type": "variable",
+                                      "name": "index_type",
+                                      "children": "",
+                                      "index": "",
+                                      "root": {
+                                        "type": "variable",
+                                        "name": "index",
+                                        "children": "",
+                                        "index": ""
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "type": "operator",
+                                    "symbol": "="
+                                  },
+                                  {
+                                    "type": "expression",
+                                    "contents": {
+                                      "type": "variable",
+                                      "name": "Index_Type",
+                                      "children": "",
+                                      "index": "",
+                                      "root": {
+                                        "type": "variable",
+                                        "name": "row",
+                                        "children": "",
+                                        "index": ""
+                                      }
+                                    }
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "terminator"
+                              }
+                            ]
+                          ],
+                          "variables": {
+                            "index": {
+                              "type": "variable",
+                              "name": "index",
+                              "children": "",
+                              "index": ""
+                            },
+                            "result": {
+                              "type": "variable",
+                              "name": "result",
+                              "children": "",
+                              "index": {
+                                "type": "expression",
+                                "contents": {
+                                  "type": "variable",
+                                  "name": "name",
+                                  "children": "",
+                                  "index": ""
+                                }
+                              }
+                            },
+                            "name": {
+                              "type": "variable",
+                              "name": "name",
+                              "children": "",
+                              "index": ""
+                            },
+                            "fields": {
+                              "type": "variable",
+                              "name": "fields",
+                              "children": "",
+                              "index": "",
+                              "root": {
+                                "type": "variable",
+                                "name": "index",
+                                "children": "",
+                                "index": ""
+                              }
+                            },
+                            "unique": {
+                              "type": "variable",
+                              "name": "unique",
+                              "children": "",
+                              "index": "",
+                              "root": {
+                                "type": "variable",
+                                "name": "index",
+                                "children": "",
+                                "index": ""
+                              }
+                            },
+                            "Non_unique": {
+                              "type": "variable",
+                              "name": "Non_unique",
+                              "children": "",
+                              "index": "",
+                              "root": {
+                                "type": "variable",
+                                "name": "row",
+                                "children": "",
+                                "index": ""
+                              }
+                            },
+                            "comment": {
+                              "type": "variable",
+                              "name": "comment",
+                              "children": "",
+                              "index": "",
+                              "root": {
+                                "type": "variable",
+                                "name": "index",
+                                "children": "",
+                                "index": ""
+                              }
+                            },
+                            "Comment": {
+                              "type": "variable",
+                              "name": "Comment",
+                              "children": "",
+                              "index": "",
+                              "root": {
+                                "type": "variable",
+                                "name": "row",
+                                "children": "",
+                                "index": ""
+                              }
+                            },
+                            "index_comment": {
+                              "type": "variable",
+                              "name": "index_comment",
+                              "children": "",
+                              "index": "",
+                              "root": {
+                                "type": "variable",
+                                "name": "index",
+                                "children": "",
+                                "index": ""
+                              }
+                            },
+                            "Index_comment": {
+                              "type": "variable",
+                              "name": "Index_comment",
+                              "children": "",
+                              "index": "",
+                              "root": {
+                                "type": "variable",
+                                "name": "row",
+                                "children": "",
+                                "index": ""
+                              }
+                            },
+                            "collation": {
+                              "type": "variable",
+                              "name": "collation",
+                              "children": "",
+                              "index": "",
+                              "root": {
+                                "type": "variable",
+                                "name": "index",
+                                "children": "",
+                                "index": ""
+                              }
+                            },
+                            "Collation": {
+                              "type": "variable",
+                              "name": "Collation",
+                              "children": "",
+                              "index": "",
+                              "root": {
+                                "type": "variable",
+                                "name": "row",
+                                "children": "",
+                                "index": ""
+                              }
+                            },
+                            "cardinality": {
+                              "type": "variable",
+                              "name": "cardinality",
+                              "children": "",
+                              "index": "",
+                              "root": {
+                                "type": "variable",
+                                "name": "index",
+                                "children": "",
+                                "index": ""
+                              }
+                            },
+                            "Cardinality": {
+                              "type": "variable",
+                              "name": "Cardinality",
+                              "children": "",
+                              "index": "",
+                              "root": {
+                                "type": "variable",
+                                "name": "row",
+                                "children": "",
+                                "index": ""
+                              }
+                            },
+                            "index_type": {
+                              "type": "variable",
+                              "name": "index_type",
+                              "children": "",
+                              "index": "",
+                              "root": {
+                                "type": "variable",
+                                "name": "index",
+                                "children": "",
+                                "index": ""
+                              }
+                            },
+                            "Index_Type": {
+                              "type": "variable",
+                              "name": "Index_Type",
+                              "children": "",
+                              "index": "",
+                              "root": {
+                                "type": "variable",
+                                "name": "row",
+                                "children": "",
+                                "index": ""
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "type": "control",
+                        "name": "else",
+                        "condition": null,
+                        "block": {
+                          "type": "block",
+                          "elements": [
+                            [
+                              {
+                                "type": "expression_list",
+                                "expressions": [
+                                  {
+                                    "type": "expression",
+                                    "contents": {
+                                      "type": "variable",
+                                      "name": "index",
+                                      "children": "",
+                                      "index": ""
+                                    }
+                                  },
+                                  {
+                                    "type": "operator",
+                                    "symbol": "="
+                                  },
+                                  {
+                                    "type": "expression",
+                                    "contents": {
+                                      "type": "variable",
+                                      "name": "result",
+                                      "children": "",
+                                      "index": {
+                                        "type": "expression",
+                                        "contents": {
+                                          "type": "variable",
+                                          "name": "name",
+                                          "children": "",
+                                          "index": ""
+                                        }
+                                      }
+                                    }
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "terminator"
+                              }
+                            ]
+                          ],
+                          "variables": {
+                            "index": {
+                              "type": "variable",
+                              "name": "index",
+                              "children": "",
+                              "index": ""
+                            },
+                            "result": {
+                              "type": "variable",
+                              "name": "result",
+                              "children": "",
+                              "index": {
+                                "type": "expression",
+                                "contents": {
+                                  "type": "variable",
+                                  "name": "name",
+                                  "children": "",
+                                  "index": ""
+                                }
+                              }
+                            }
+                          }
+                        }
+                      },
+                      [
+                        {
+                          "type": "expression",
+                          "contents": {
+                            "type": "variable",
+                            "name": "fields",
+                            "children": "",
+                            "index": null,
+                            "append": {
+                              "type": "expression",
+                              "contents": {
+                                "type": "variable",
+                                "name": "Column_name",
+                                "children": "",
+                                "index": "",
+                                "root": {
+                                  "type": "variable",
+                                  "name": "row",
+                                  "children": "",
+                                  "index": ""
+                                }
+                              }
+                            },
+                            "root": {
+                              "type": "variable",
+                              "name": "index",
+                              "children": "",
+                              "index": ""
+                            }
+                          }
+                        },
+                        {
+                          "type": "terminator"
+                        }
+                      ]
+                    ],
+                    "variables": {
+                      "name": {
+                        "type": "variable",
+                        "name": "name",
+                        "children": "",
+                        "index": ""
+                      },
+                      "Key_name": {
+                        "type": "variable",
+                        "name": "Key_name",
+                        "children": "",
+                        "index": "",
+                        "root": {
+                          "type": "variable",
+                          "name": "index",
+                          "children": "",
+                          "index": ""
+                        }
+                      },
+                      "result": {
+                        "type": "variable",
+                        "name": "result",
+                        "children": "",
+                        "index": {
+                          "type": "expression",
+                          "contents": {
+                            "type": "variable",
+                            "name": "name",
+                            "children": "",
+                            "index": ""
+                          }
+                        }
+                      },
+                      "index": {
+                        "type": "variable",
+                        "name": "index",
+                        "children": "",
+                        "index": ""
+                      },
+                      "fields": {
+                        "type": "variable",
+                        "name": "fields",
+                        "children": "",
+                        "index": null,
+                        "append": {
+                          "type": "expression",
+                          "contents": {
+                            "type": "variable",
+                            "name": "Column_name",
+                            "children": "",
+                            "index": "",
+                            "root": {
+                              "type": "variable",
+                              "name": "row",
+                              "children": "",
+                              "index": ""
+                            }
+                          }
+                        },
+                        "root": {
+                          "type": "variable",
+                          "name": "index",
+                          "children": "",
+                          "index": ""
+                        }
+                      },
+                      "unique": {
+                        "type": "variable",
+                        "name": "unique",
+                        "children": "",
+                        "index": "",
+                        "root": {
+                          "type": "variable",
+                          "name": "index",
+                          "children": "",
+                          "index": ""
+                        }
+                      },
+                      "Non_unique": {
+                        "type": "variable",
+                        "name": "Non_unique",
+                        "children": "",
+                        "index": "",
+                        "root": {
+                          "type": "variable",
+                          "name": "row",
+                          "children": "",
+                          "index": ""
+                        }
+                      },
+                      "comment": {
+                        "type": "variable",
+                        "name": "comment",
+                        "children": "",
+                        "index": "",
+                        "root": {
+                          "type": "variable",
+                          "name": "index",
+                          "children": "",
+                          "index": ""
+                        }
+                      },
+                      "Comment": {
+                        "type": "variable",
+                        "name": "Comment",
+                        "children": "",
+                        "index": "",
+                        "root": {
+                          "type": "variable",
+                          "name": "row",
+                          "children": "",
+                          "index": ""
+                        }
+                      },
+                      "index_comment": {
+                        "type": "variable",
+                        "name": "index_comment",
+                        "children": "",
+                        "index": "",
+                        "root": {
+                          "type": "variable",
+                          "name": "index",
+                          "children": "",
+                          "index": ""
+                        }
+                      },
+                      "Index_comment": {
+                        "type": "variable",
+                        "name": "Index_comment",
+                        "children": "",
+                        "index": "",
+                        "root": {
+                          "type": "variable",
+                          "name": "row",
+                          "children": "",
+                          "index": ""
+                        }
+                      },
+                      "collation": {
+                        "type": "variable",
+                        "name": "collation",
+                        "children": "",
+                        "index": "",
+                        "root": {
+                          "type": "variable",
+                          "name": "index",
+                          "children": "",
+                          "index": ""
+                        }
+                      },
+                      "Collation": {
+                        "type": "variable",
+                        "name": "Collation",
+                        "children": "",
+                        "index": "",
+                        "root": {
+                          "type": "variable",
+                          "name": "row",
+                          "children": "",
+                          "index": ""
+                        }
+                      },
+                      "cardinality": {
+                        "type": "variable",
+                        "name": "cardinality",
+                        "children": "",
+                        "index": "",
+                        "root": {
+                          "type": "variable",
+                          "name": "index",
+                          "children": "",
+                          "index": ""
+                        }
+                      },
+                      "Cardinality": {
+                        "type": "variable",
+                        "name": "Cardinality",
+                        "children": "",
+                        "index": "",
+                        "root": {
+                          "type": "variable",
+                          "name": "row",
+                          "children": "",
+                          "index": ""
+                        }
+                      },
+                      "index_type": {
+                        "type": "variable",
+                        "name": "index_type",
+                        "children": "",
+                        "index": "",
+                        "root": {
+                          "type": "variable",
+                          "name": "index",
+                          "children": "",
+                          "index": ""
+                        }
+                      },
+                      "Index_Type": {
+                        "type": "variable",
+                        "name": "Index_Type",
+                        "children": "",
+                        "index": "",
+                        "root": {
+                          "type": "variable",
+                          "name": "row",
+                          "children": "",
+                          "index": ""
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "expression_list",
+                  "expressions": [
+                    "return",
+                    {
+                      "type": "expression",
+                      "contents": {
+                        "type": "variable",
+                        "name": "result",
+                        "children": "",
+                        "index": ""
+                      }
+                    }
+                  ]
+                }
+              ],
+              "variables": {
+                "rows": {
+                  "type": "variable",
+                  "name": "rows",
+                  "children": "",
+                  "index": ""
+                },
+                "name": {
+                  "type": "variable",
+                  "name": "name",
+                  "children": "",
+                  "index": ""
+                },
+                "this": {
+                  "type": "variable",
+                  "name": "this",
+                  "children": "",
+                  "index": ""
+                },
+                "result": {
+                  "type": "variable",
+                  "name": "result",
+                  "children": "",
+                  "index": ""
+                },
+                "row": {
+                  "type": "variable",
+                  "name": "row",
+                  "children": "",
+                  "index": ""
+                },
+                "Key_name": {
+                  "type": "variable",
+                  "name": "Key_name",
+                  "children": "",
+                  "index": "",
+                  "root": {
+                    "type": "variable",
+                    "name": "index",
+                    "children": "",
+                    "index": ""
+                  }
+                },
+                "index": {
+                  "type": "variable",
+                  "name": "index",
+                  "children": "",
+                  "index": ""
+                },
+                "fields": {
+                  "type": "variable",
+                  "name": "fields",
+                  "children": "",
+                  "index": null,
+                  "append": {
+                    "type": "expression",
+                    "contents": {
+                      "type": "variable",
+                      "name": "Column_name",
+                      "children": "",
+                      "index": "",
+                      "root": {
+                        "type": "variable",
+                        "name": "row",
+                        "children": "",
+                        "index": ""
+                      }
+                    }
+                  },
+                  "root": {
+                    "type": "variable",
+                    "name": "index",
+                    "children": "",
+                    "index": ""
+                  }
+                },
+                "unique": {
+                  "type": "variable",
+                  "name": "unique",
+                  "children": "",
+                  "index": "",
+                  "root": {
+                    "type": "variable",
+                    "name": "index",
+                    "children": "",
+                    "index": ""
+                  }
+                },
+                "Non_unique": {
+                  "type": "variable",
+                  "name": "Non_unique",
+                  "children": "",
+                  "index": "",
+                  "root": {
+                    "type": "variable",
+                    "name": "row",
+                    "children": "",
+                    "index": ""
+                  }
+                },
+                "comment": {
+                  "type": "variable",
+                  "name": "comment",
+                  "children": "",
+                  "index": "",
+                  "root": {
+                    "type": "variable",
+                    "name": "index",
+                    "children": "",
+                    "index": ""
+                  }
+                },
+                "Comment": {
+                  "type": "variable",
+                  "name": "Comment",
+                  "children": "",
+                  "index": "",
+                  "root": {
+                    "type": "variable",
+                    "name": "row",
+                    "children": "",
+                    "index": ""
+                  }
+                },
+                "index_comment": {
+                  "type": "variable",
+                  "name": "index_comment",
+                  "children": "",
+                  "index": "",
+                  "root": {
+                    "type": "variable",
+                    "name": "index",
+                    "children": "",
+                    "index": ""
+                  }
+                },
+                "Index_comment": {
+                  "type": "variable",
+                  "name": "Index_comment",
+                  "children": "",
+                  "index": "",
+                  "root": {
+                    "type": "variable",
+                    "name": "row",
+                    "children": "",
+                    "index": ""
+                  }
+                },
+                "collation": {
+                  "type": "variable",
+                  "name": "collation",
+                  "children": "",
+                  "index": "",
+                  "root": {
+                    "type": "variable",
+                    "name": "index",
+                    "children": "",
+                    "index": ""
+                  }
+                },
+                "Collation": {
+                  "type": "variable",
+                  "name": "Collation",
+                  "children": "",
+                  "index": "",
+                  "root": {
+                    "type": "variable",
+                    "name": "row",
+                    "children": "",
+                    "index": ""
+                  }
+                },
+                "cardinality": {
+                  "type": "variable",
+                  "name": "cardinality",
+                  "children": "",
+                  "index": "",
+                  "root": {
+                    "type": "variable",
+                    "name": "index",
+                    "children": "",
+                    "index": ""
+                  }
+                },
+                "Cardinality": {
+                  "type": "variable",
+                  "name": "Cardinality",
+                  "children": "",
+                  "index": "",
+                  "root": {
+                    "type": "variable",
+                    "name": "row",
+                    "children": "",
+                    "index": ""
+                  }
+                },
+                "index_type": {
+                  "type": "variable",
+                  "name": "index_type",
+                  "children": "",
+                  "index": "",
+                  "root": {
+                    "type": "variable",
+                    "name": "index",
+                    "children": "",
+                    "index": ""
+                  }
+                },
+                "Index_Type": {
+                  "type": "variable",
+                  "name": "Index_Type",
+                  "children": "",
+                  "index": "",
+                  "root": {
+                    "type": "variable",
+                    "name": "row",
+                    "children": "",
+                    "index": ""
+                  }
+                }
+              }
+            },
+            "constructor": false
+          },
+          {
+            "type": "method_definition",
+            "name": "get_vineyard_layer",
+            "parameters": {
+              "type": "parameters",
+              "variables": [
+                ""
+              ]
+            },
+            "block": {
+              "type": "block",
+              "elements": [
+                [
+                  {
+                    "type": "expression_list",
+                    "expressions": [
+                      {
+                        "type": "expression",
+                        "contents": {
+                          "type": "variable",
+                          "name": "layer",
+                          "children": "",
+                          "index": ""
+                        }
+                      },
+                      {
+                        "type": "operator",
+                        "symbol": "="
+                      },
+                      {
+                        "type": "expression",
+                        "contents": {
+                          "type": "instantiate_class",
+                          "name": "stdClass",
+                          "arguments": {
+                            "type": "arguments",
+                            "expressions": [
+                              ""
+                            ]
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "terminator"
+                  }
+                ],
+                [
+                  {
+                    "type": "expression_list",
+                    "expressions": [
+                      {
+                        "type": "expression",
+                        "contents": {
+                          "type": "variable",
+                          "name": "properties",
+                          "children": "",
+                          "index": "",
+                          "root": {
+                            "type": "variable",
+                            "name": "layer",
+                            "children": "",
+                            "index": ""
+                          }
+                        }
+                      },
+                      {
+                        "type": "operator",
+                        "symbol": "="
+                      },
+                      {
+                        "type": "expression",
+                        "contents": {
+                          "type": "create_array",
+                          "arguments": {
+                            "type": "arguments",
+                            "expressions": [
+                              ""
+                            ]
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "terminator"
+                  }
+                ],
+                {
+                  "type": "foreach_object",
+                  "object": {
+                    "type": "variable",
+                    "name": "fields",
+                    "children": "",
+                    "index": "",
+                    "root": {
+                      "type": "variable",
+                      "name": "this",
+                      "children": "",
+                      "index": ""
+                    }
+                  },
+                  "key": "",
+                  "value": {
+                    "type": "variable",
+                    "name": "item",
+                    "children": "",
+                    "index": ""
+                  },
+                  "block": {
+                    "type": "block",
+                    "elements": [
+                      [
+                        {
+                          "type": "expression_list",
+                          "expressions": [
+                            {
+                              "type": "expression",
+                              "contents": {
+                                "type": "variable",
+                                "name": "property",
+                                "children": "",
+                                "index": ""
+                              }
+                            },
+                            {
+                              "type": "operator",
+                              "symbol": "="
+                            },
+                            {
+                              "type": "expression",
+                              "contents": {
+                                "type": "instantiate_class",
+                                "name": "stdClass",
+                                "arguments": {
+                                  "type": "arguments",
+                                  "expressions": [
+                                    ""
+                                  ]
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "terminator"
+                        }
+                      ],
+                      [
+                        {
+                          "type": "expression_list",
+                          "expressions": [
+                            {
+                              "type": "expression",
+                              "contents": {
+                                "type": "variable",
+                                "name": "type",
+                                "children": "",
+                                "index": "",
+                                "root": {
+                                  "type": "variable",
+                                  "name": "property",
+                                  "children": "",
+                                  "index": ""
+                                }
+                              }
+                            },
+                            {
+                              "type": "operator",
+                              "symbol": "="
+                            },
+                            {
+                              "type": "expression",
+                              "contents": {
+                                "type": "invoke_static_member",
+                                "class_name": "Table",
+                                "target": {
+                                  "type": "invoke_function",
+                                  "name": "convert_to_property_type",
+                                  "arguments": {
+                                    "type": "arguments",
+                                    "expressions": [
+                                      {
+                                        "type": "expression",
+                                        "contents": {
+                                          "type": "variable",
+                                          "name": "type",
+                                          "children": "",
+                                          "index": "",
+                                          "root": {
+                                            "type": "variable",
+                                            "name": "item",
+                                            "children": "",
+                                            "index": ""
+                                          }
+                                        }
+                                      }
+                                    ]
+                                  }
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "terminator"
+                        }
+                      ],
+                      [
+                        {
+                          "type": "expression_list",
+                          "expressions": [
+                            {
+                              "type": "expression",
+                              "contents": {
+                                "type": "variable",
+                                "name": "properties",
+                                "children": "",
+                                "index": {
+                                  "type": "expression",
+                                  "contents": {
+                                    "type": "variable",
+                                    "name": "name",
+                                    "children": "",
+                                    "index": "",
+                                    "root": {
+                                      "type": "variable",
+                                      "name": "item",
+                                      "children": "",
+                                      "index": ""
+                                    }
+                                  }
+                                },
+                                "root": {
+                                  "type": "variable",
+                                  "name": "layer",
+                                  "children": "",
+                                  "index": ""
+                                }
+                              }
+                            },
+                            {
+                              "type": "operator",
+                              "symbol": "="
+                            },
+                            {
+                              "type": "expression",
+                              "contents": {
+                                "type": "variable",
+                                "name": "property",
+                                "children": "",
+                                "index": ""
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "terminator"
+                        }
+                      ]
+                    ],
+                    "variables": {
+                      "property": {
+                        "type": "variable",
+                        "name": "property",
+                        "children": "",
+                        "index": ""
+                      },
+                      "type": {
+                        "type": "variable",
+                        "name": "type",
+                        "children": "",
+                        "index": "",
+                        "root": {
+                          "type": "variable",
+                          "name": "item",
+                          "children": "",
+                          "index": ""
+                        }
+                      },
+                      "properties": {
+                        "type": "variable",
+                        "name": "properties",
+                        "children": "",
+                        "index": {
+                          "type": "expression",
+                          "contents": {
+                            "type": "variable",
+                            "name": "name",
+                            "children": "",
+                            "index": "",
+                            "root": {
+                              "type": "variable",
+                              "name": "item",
+                              "children": "",
+                              "index": ""
+                            }
+                          }
+                        },
+                        "root": {
+                          "type": "variable",
+                          "name": "layer",
+                          "children": "",
+                          "index": ""
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "expression_list",
+                  "expressions": [
+                    "return",
+                    {
+                      "type": "expression",
+                      "contents": {
+                        "type": "variable",
+                        "name": "layer",
+                        "children": "",
+                        "index": ""
+                      }
+                    }
+                  ]
+                }
+              ],
+              "variables": {
+                "layer": {
+                  "type": "variable",
+                  "name": "layer",
+                  "children": "",
+                  "index": ""
+                },
+                "properties": {
+                  "type": "variable",
+                  "name": "properties",
+                  "children": "",
+                  "index": {
+                    "type": "expression",
+                    "contents": {
+                      "type": "variable",
+                      "name": "name",
+                      "children": "",
+                      "index": "",
+                      "root": {
+                        "type": "variable",
+                        "name": "item",
+                        "children": "",
+                        "index": ""
+                      }
+                    }
+                  },
+                  "root": {
+                    "type": "variable",
+                    "name": "layer",
+                    "children": "",
+                    "index": ""
+                  }
+                },
+                "fields": {
+                  "type": "variable",
+                  "name": "fields",
+                  "children": "",
+                  "index": "",
+                  "root": {
+                    "type": "variable",
+                    "name": "this",
+                    "children": "",
+                    "index": ""
+                  }
+                },
+                "item": {
+                  "type": "variable",
+                  "name": "item",
+                  "children": "",
+                  "index": ""
+                },
+                "property": {
+                  "type": "variable",
+                  "name": "property",
+                  "children": "",
+                  "index": ""
+                },
+                "type": {
+                  "type": "variable",
+                  "name": "type",
+                  "children": "",
+                  "index": "",
+                  "root": {
+                    "type": "variable",
+                    "name": "item",
+                    "children": "",
+                    "index": ""
+                  }
+                }
+              }
+            },
+            "constructor": false
+          },
+          {
+            "type": "method_definition",
+            "name": "get_ground_layer",
+            "parameters": {
+              "type": "parameters",
+              "variables": [
+                ""
+              ]
+            },
+            "block": {
+              "type": "block",
+              "elements": [],
+              "variables": {}
+            },
+            "constructor": false
           }
-        }
-      },
-      {
-        "type": "terminator"
+        ]
       }
-    ]
+    }
   ]
 }

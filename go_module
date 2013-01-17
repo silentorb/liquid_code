@@ -1,0 +1,1 @@
+coffee convert.coffee ../ground_php/modules/$1/inc/$2.inc ../ground_js/node_modules/$1/$2.coffee

@@ -15,6 +15,19 @@ arguments = space* "(" first:expression? others:(space* ',' expression)* ")" spa
   return new Arguments(expressions);
 }
 
+key_value = space* key:expression space* "=>" space* value:expression space* ","? space*
+{
+  return new Key_Value(key, value);
+}
+
+associative_array =
+space* "array" space* "("
+items:(key_value)+
+")" space*
+{
+  return new Associative_Array_Definition(items);
+}
+
 attribute = 
 ("public" / "private" / "protected" / "static" / space+)
 
@@ -52,12 +65,12 @@ code_with_meat =
 
 comment = comment_line / comment_block
 
-comment_line = "//" text:[^\n]*
+comment_line = space* "//" text:[^\n]* space*
 {
   return new Comment(compress(text), 0);
 }
 
-comment_block = "/*"  text:(! "*/".)+ "*/"
+comment_block = space* "/*"  text:(! "*/".)+ "*/" space*
 {
   return new Comment(compress(text), 1);
 }
@@ -81,7 +94,7 @@ expression =
 expression2 = 
 space* negate:("!" !"=" space*)? expression:(
   conversion
-/ static_value
+/ associative_array
 / instantiate_class
 / invoke_static_member
 / invoke_variable_function
@@ -90,6 +103,7 @@ space* negate:("!" !"=" space*)? expression:(
 / create_array
 / modifier
 / invoke_function
+/ static_value
 / comment
 ) space*
 {
@@ -105,18 +119,12 @@ static_value =
 expression_list = first:expression2
 others:(space* op:operator exp:expression2 { return [ op, exp ]; })+ space*
 {
-  return new Expression_List([first].concat(others));
-  var result = [];
-  for (var i = 0; i < list.length; ++i) {
-    if (list[i][0] !== null)
-      result.push(list[i][0]);
+  var total = [first]
+  for(var i = 0; i < others.length; ++i) {
+    total = total.concat(others[i]);
   }
-  
-  return {
-    type: 'expression_list',
-    data: result,
-    data2: list
-  };
+//  console.log(others);
+  return new Expression_List(total);
 }
 
 space = [ \n]
@@ -167,14 +175,6 @@ function_definition = "function" space+ name:non_keyword parameters:parameters b
   return new Function_Definition(compress(name), parameters, block);
 }
 
-global =
-"global" space+ variable:variable space*
-expression:("=" space* expression:expression space* { return expression; })?
-terminator:terminator
-{
-  return new Comment("global " + variable.name);
-}
-
 // The most tricky rule in this grammar.
 heredoc =
 space* "<<<" (label1:word "\n" { Parser.label = label1; return label1; })
@@ -223,7 +223,7 @@ number = number:('-'? space* [0-9.]+)
   return compress(number);
 }
 
-default_value = space* "=" space* default_value:[^,)\n]+
+default_value = space* "=" space* default_value:expression
 {
   return compress(default_value);
 }
@@ -264,7 +264,7 @@ statement =
 
 control_no_parameters =
 space*
-name:("else") block:block
+name:("else" / "try") block:block
 space*
 {
   return new Control(name, null, block);
@@ -279,14 +279,14 @@ space* "do" block:block
 
 control_with_parameters =
 space*
-name:(keyword_with_parameter) space* "(" condition:expression+ ")" block:block
+name:(keyword_with_parameter) space* "(" (space* "Exception" space+)? condition:expression+ ")" block:block
 space*
 {
   return new Control(name, condition, block);
 }
 
 keyword_with_parameter = 
-"if" / "else if" / "while"
+"if" / "else if" / "while" / "catch"
 
 string = single_quote / double_quote / heredoc
 single_quote = "'" text:[^']* "'"
@@ -299,12 +299,9 @@ double_quote = '"' text:[^"]* '"'
   return new Literal_String(compress(text), 'double');
 }
 
-regex_middle =
-
-
 regex =
-  '"/' text:(x:('/"' / .) &{ return x != '/"'; })* '/"'
-/ "'/" text:(x:("/'" / .) &{ return x != "/'"; })* "/'"
+  '"/' text:(x:('/"' / '\\"' / .) &{ return x != '/"' && x != '"'; })* '/"'
+/ "'/" text:(x:("/'" / "\\'" / .) &{ return x != "/'" && x != "'"; })* "/'"
 {
   return new Regex(compress(text));
 }
@@ -314,7 +311,7 @@ value =
 / "null"i
 / value_type
 
-value_type = "bool"i / "int"i / "float"i / "string"i
+value_type = "bool"i / "int"i / "float"i / "string"i / "object"i / "array"i
 
 assignment = 
 variable:variable space* assignment_operator space* expression:expression
@@ -325,7 +322,7 @@ variable:variable space* assignment_operator space* expression:expression
     return new Assignment(variable, expression);
 }
 
-assignment_operator = "=" / ".=" / "+=" / "-=" / "*=" / "/="
+assignment_operator ="=" / ".=" / "+=" / "-=" / "*=" / "/="
 
 modifier_operators = "--" / "++"
 
@@ -391,20 +388,22 @@ children:('->' word:word !(space* "(") { return word; })*
 variable_base = root:word
 options:(
   append:(" "* "[" space* "]" space* "=" space* expression:expression { return expression; })
+  {     
+    return { append: append, index: null, object_index: null, child: null }; 
+  }
   /
   index:(" "* "[" space* expression:expression space* "]" { return expression; })?
   object_index:("->" "{"? space* variable:variable space* "}"? { return variable; })?
   child:('->' child:(invoke_function / variable_base) { return child; })?
   { 
-    if (typeof append == 'undefined') append = null;
     if (typeof child == 'undefined') child = null;
     if (typeof index == 'undefined') index = null;
     if (typeof object_index == 'undefined') object_index = null;
-    return { append: append, index: index, object_index: object_index, child: child }; 
+    return { append: null, index: index, object_index: object_index, child: child }; 
   }
 )
 {
-//  console.log(root, options);
+//  console.log('var', root, options);
   var child = options.child, append = options.append, index = options.index;
   var result = new Variable(root, '', index);
   if (child) {
