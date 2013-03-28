@@ -385,6 +385,8 @@ children:('->' word:word !(space* "(") { return word; })*
   return new Variable(root, children, '');
 }
 
+array_index = (" "* "[" space* expression:expression space* "]" { return expression; })
+array_index_multiple = expression:array_index+ { return expression; }
 variable_base = root:word
 options:(
   append:(" "* "[" space* "]" space* "=" space* expression:expression { return expression; })
@@ -392,7 +394,7 @@ options:(
     return { append: append, index: null, object_index: null, child: null }; 
   }
   /
-  index:(" "* "[" space* expression:expression space* "]" { return expression; })?
+  index: array_index_multiple?
   object_index:("->" "{"? space* variable:variable space* "}"? { return variable; })?
   child:('->' child:(invoke_function / variable_base) { return child; })?
   { 

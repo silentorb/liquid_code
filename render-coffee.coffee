@@ -15,6 +15,7 @@ MetaHub.node_module module, ->
     'get_object_vars': '$1'
     'preg_match': '$2.match($1)'
     'isset': "typeof $1 != 'undefined'"
+    'count': '$1.length'
 
   CoffeeScript = Ice.subclass("CoffeeScript",
     depth: 0
